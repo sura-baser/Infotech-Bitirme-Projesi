@@ -5,8 +5,8 @@ namespace PastaneApp.Core.Interfaces;
 
 public interface IGenericRepository<T> where T : BaseEntity
 {
-    Task<T?> GetByIdAsync(int id);
-    Task<IReadOnlyList<T>> GetAllAsync();
+    Task<T?> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes);
+    Task<IReadOnlyList<T>> GetAllAsync(params Expression<Func<T, object>>[] includes);
     Task<IReadOnlyList<T>> FindAsync(Expression<Func<T, bool>> predicate);
     Task AddAsync(T entity);
     void Update(T entity);
