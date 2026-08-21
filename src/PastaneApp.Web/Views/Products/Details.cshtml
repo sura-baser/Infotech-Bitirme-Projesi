@@ -1,0 +1,126 @@
+@using PastaneApp.Core.Enums
+@model ProductDetailViewModel
+
+@{
+    ViewData["Title"] = Model.Product.Name;
+    var finishedImage = Model.Product.Images
+        .Where(i => i.ImageType == ImageType.Finished)
+        .OrderBy(i => i.SortOrder)
+        .FirstOrDefault();
+    var ingredientsImage = Model.Product.Images
+        .Where(i => i.ImageType == ImageType.Ingredients)
+        .OrderBy(i => i.SortOrder)
+        .FirstOrDefault();
+    var processImage = Model.Product.Images
+        .Where(i => i.ImageType == ImageType.Process)
+        .OrderBy(i => i.SortOrder)
+        .FirstOrDefault();
+}
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        @if (finishedImage == null && ingredientsImage == null)
+        {
+            <div class="d-flex align-items-center justify-content-center bg-light rounded" style="height:400px;">
+                <span class="text-muted">Fotoğraf eklenmedi</span>
+            </div>
+        }
+        else
+        {
+            <div id="productCarousel" class="carousel slide">
+                <div class="carousel-inner">
+                    @if (finishedImage != null)
+                    {
+                        <div class="carousel-item active">
+                            <img src="@finishedImage.ImageUrl" class="d-block w-100 rounded" style="height:400px;object-fit:cover;" alt="@Model.Product.Name" />
+                        </div>
+                    }
+                    @if (ingredientsImage != null)
+                    {
+                        <div class="carousel-item @(finishedImage == null ? "active" : "")">
+                            <div class="reveal-container" style="position:relative;">
+                                <img src="@ingredientsImage.ImageUrl" class="d-block w-100 rounded" style="height:400px;object-fit:cover;" alt="İçindekiler" />
+                                @if (processImage != null)
+                                {
+                                    <img src="@processImage.ImageUrl" class="reveal-overlay d-block w-100 rounded"
+                                         style="height:400px;object-fit:cover;position:absolute;top:0;left:0;opacity:0;transition:opacity 0.6s ease;" alt="Oluşum" />
+                                    <button type="button" class="reveal-trigger btn btn-light btn-sm shadow-sm" style="position:absolute;bottom:1rem;right:1rem;">
+                                        Dokun, nasıl oluştuğunu gör
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (finishedImage != null && ingredientsImage != null)
+                {
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="col-md-6">
+        <h1>@Model.Product.Name</h1>
+        <p class="text-muted">@Model.Product.Category?.Name</p>
+        <p class="fs-3 fw-bold">@Model.Product.Price.ToString("C2")</p>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Product.ServingInfo))
+        {
+            <p><strong>Porsiyon:</strong> @Model.Product.ServingInfo</p>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Product.Description))
+        {
+            <p>@Model.Product.Description</p>
+        }
+
+        @if (Model.AllergenNames.Any())
+        {
+            <div class="mb-3">
+                <strong>Alerjen Bilgisi:</strong>
+                @foreach (var allergenName in Model.AllergenNames)
+                {
+                    <span class="badge bg-warning text-dark me-1">@allergenName</span>
+                }
+            </div>
+        }
+
+        @if (Model.Product.Ingredients.Any())
+        {
+            <div class="mb-4">
+                <strong>İçindekiler:</strong>
+                <ul>
+                    @foreach (var ingredient in Model.Product.Ingredients.OrderBy(i => i.SortOrder))
+                    {
+                        <li>@ingredient.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input type="hidden" name="productId" value="@Model.Product.Id" />
+            <div class="d-flex align-items-center gap-2">
+                <input type="number" name="quantity" value="1" min="1" class="form-control" style="width:80px;" />
+                <button type="submit" class="btn btn-primary">Sepete Ekle</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.reveal-trigger').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var overlay = this.closest('.reveal-container').querySelector('.reveal-overlay');
+                overlay.style.opacity = overlay.style.opacity === '1' ? '0' : '1';
+            });
+        });
+    </script>
+}

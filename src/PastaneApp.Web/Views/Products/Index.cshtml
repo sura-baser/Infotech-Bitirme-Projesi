@@ -1,0 +1,77 @@
+@model ProductListViewModel
+
+@{
+    ViewData["Title"] = "Ürünler";
+}
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <form method="get" asp-action="Index">
+            <div class="mb-3">
+                <label class="form-label">Ara</label>
+                <input type="text" name="search" value="@Model.Search" class="form-control" placeholder="Ürün ara..." />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Kategori</label>
+                <select name="categoryId" class="form-select" asp-items="Model.Categories">
+                    <option value="">Tüm Kategoriler</option>
+                </select>
+            </div>
+
+            @if (Model.AllAllergens.Any())
+            {
+                <div class="mb-3">
+                    <label class="form-label">Alerjen İçermesin</label>
+                    @foreach (var allergen in Model.AllAllergens)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" name="excludeAllergenIds" value="@allergen.Id" class="form-check-input"
+                                   id="filter-allergen-@allergen.Id" checked="@Model.ExcludedAllergenIds.Contains(allergen.Id)" />
+                            <label class="form-check-label" for="filter-allergen-@allergen.Id">@allergen.Name</label>
+                        </div>
+                    }
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+            <a asp-action="Index" class="btn btn-link w-100">Filtreleri Temizle</a>
+        </form>
+    </div>
+
+    <div class="col-md-9">
+        <h1 class="mb-4">Ürünlerimiz</h1>
+
+        @if (!Model.Products.Any())
+        {
+            <p class="text-muted">Aradığınız kriterlere uygun ürün bulunamadı.</p>
+        }
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col">
+                    <a asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark">
+                        <div class="card h-100">
+                            @if (product.ImageUrl != null)
+                            {
+                                <img src="@product.ImageUrl" class="card-img-top" style="height:200px;object-fit:cover;" alt="@product.Name" />
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center justify-content-center bg-light" style="height:200px;">
+                                    <span class="text-muted">Fotoğraf eklenmedi</span>
+                                </div>
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text text-muted mb-1">@product.CategoryName</p>
+                                <p class="card-text fw-bold">@product.Price.ToString("C2")</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

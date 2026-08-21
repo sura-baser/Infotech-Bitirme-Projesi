@@ -30,6 +30,7 @@
                 <td>@product.Stock</td>
                 <td>@(product.IsActive ? "Evet" : "Hayır")</td>
                 <td class="text-end">
+                    <a asp-controller="ProductManage" asp-action="Manage" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Detaylar</a>
                     <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-outline-secondary">Düzenle</a>
                     <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-sm btn-outline-danger">Sil</a>
                 </td>

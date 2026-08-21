@@ -1,0 +1,65 @@
+@model CartIndexViewModel
+
+@{
+    ViewData["Title"] = "Sepetim";
+}
+
+<h1 class="mb-4">Sepetim</h1>
+
+@if (!Model.Items.Any())
+{
+    <p class="text-muted">Sepetiniz boş.</p>
+    <a asp-controller="Products" asp-action="Index" class="btn btn-primary">Ürünlere Göz At</a>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ürün</th>
+                <th>Birim Fiyat</th>
+                <th>Adet</th>
+                <th>Ara Toplam</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td style="width:70px;">
+                        @if (item.ImageUrl != null)
+                        {
+                            <img src="@item.ImageUrl" style="width:60px;height:60px;object-fit:cover;" class="rounded" alt="@item.ProductName" />
+                        }
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td>@item.UnitPrice.ToString("C2")</td>
+                    <td style="width:120px;">
+                        <form asp-action="UpdateQuantity" method="post" class="d-flex gap-1">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm" style="width:70px;" />
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">↻</button>
+                        </form>
+                    </td>
+                    <td>@item.Subtotal.ToString("C2")</td>
+                    <td>
+                        <form asp-action="RemoveItem" method="post">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Kaldır</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="4" class="text-end">Toplam</th>
+                <th colspan="2">@Model.Total.ToString("C2")</th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <a asp-controller="Orders" asp-action="Checkout" class="btn btn-primary">Siparişi Tamamla</a>
+}
