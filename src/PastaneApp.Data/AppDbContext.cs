@@ -16,6 +16,10 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ProductIngredient> ProductIngredients => Set<ProductIngredient>();
     public DbSet<Allergen> Allergens => Set<Allergen>();
     public DbSet<ProductAllergen> ProductAllergens => Set<ProductAllergen>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderDetail> OrderDetails => Set<OrderDetail>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
