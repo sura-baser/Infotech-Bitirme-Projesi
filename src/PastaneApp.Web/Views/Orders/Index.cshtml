@@ -5,38 +5,40 @@
     ViewData["Title"] = "Siparişlerim";
 }
 
-<h1 class="mb-4">Siparişlerim</h1>
+<div style="max-width:960px; margin:0 auto; padding:40px 24px 90px;">
+    <h1 class="as-serif" style="font-size:34px; font-weight:700; margin:0 0 32px;">Siparişlerim</h1>
 
-@if (!Model.Any())
-{
-    <p class="text-muted">Henüz siparişiniz yok.</p>
-    <a asp-controller="Products" asp-action="Index" class="btn btn-primary">Alışverişe Başla</a>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Tarih</th>
-                <th>Durum</th>
-                <th>Toplam</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
+    @if (!Model.Any())
+    {
+        <p style="color:var(--ink-soft); margin-bottom:20px;">Henüz siparişiniz yok.</p>
+        <a asp-controller="Products" asp-action="Index" class="as-pill">Alışverişe Başla</a>
+    }
+    else
+    {
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
                 <tr>
-                    <td>@order.Id</td>
-                    <td>@order.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
-                    <td>@OrderStatusHelper.GetDisplayName(order.Status)</td>
-                    <td>@order.TotalAmount.ToString("C2")</td>
-                    <td class="text-end">
-                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-outline-secondary">Detay</a>
-                    </td>
+                    <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 16px 12px 0; border-bottom:1px solid var(--line);">#</th>
+                    <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 16px 12px; border-bottom:1px solid var(--line);">Tarih</th>
+                    <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 16px 12px; border-bottom:1px solid var(--line);">Durum</th>
+                    <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 16px 12px; border-bottom:1px solid var(--line);">Toplam</th>
+                    <th style="border-bottom:1px solid var(--line);"></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td style="padding:16px 16px 16px 0; border-bottom:1px solid var(--line); font-size:14px;">@order.Id</td>
+                        <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px;">@order.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                        <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px;">@OrderStatusHelper.GetDisplayName(order.Status)</td>
+                        <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px; font-weight:600;">@order.TotalAmount.ToString("C2")</td>
+                        <td style="padding:16px; border-bottom:1px solid var(--line); text-align:right;">
+                            <a asp-action="Details" asp-route-id="@order.Id" style="font-size:13px; font-weight:600;">Detay</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

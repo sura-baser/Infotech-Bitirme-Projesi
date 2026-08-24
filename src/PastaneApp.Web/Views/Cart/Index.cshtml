@@ -4,62 +4,57 @@
     ViewData["Title"] = "Sepetim";
 }
 
-<h1 class="mb-4">Sepetim</h1>
+<div style="max-width:1280px; margin:0 auto; padding:24px 24px 90px;">
+    <h1 class="as-serif" style="font-size:38px; font-weight:700; margin:0 0 40px;">Sepetiniz</h1>
 
-@if (!Model.Items.Any())
-{
-    <p class="text-muted">Sepetiniz boş.</p>
-    <a asp-controller="Products" asp-action="Index" class="btn btn-primary">Ürünlere Göz At</a>
-}
-else
-{
-    <table class="table align-middle">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Ürün</th>
-                <th>Birim Fiyat</th>
-                <th>Adet</th>
-                <th>Ara Toplam</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Items)
-            {
-                <tr>
-                    <td style="width:70px;">
-                        @if (item.ImageUrl != null)
-                        {
-                            <img src="@item.ImageUrl" style="width:60px;height:60px;object-fit:cover;" class="rounded" alt="@item.ProductName" />
-                        }
-                    </td>
-                    <td>@item.ProductName</td>
-                    <td>@item.UnitPrice.ToString("C2")</td>
-                    <td style="width:120px;">
-                        <form asp-action="UpdateQuantity" method="post" class="d-flex gap-1">
+    @if (!Model.Items.Any())
+    {
+        <p style="color:var(--ink-soft); margin-bottom:20px;">Sepetiniz boş.</p>
+        <a asp-controller="Products" asp-action="Index" class="as-pill">Ürünlere Göz At</a>
+    }
+    else
+    {
+        <div style="display:grid; grid-template-columns:1fr 380px; gap:56px; align-items:start;">
+
+            <!-- line items -->
+            <div>
+                @foreach (var item in Model.Items)
+                {
+                    <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--line); align-items:center;">
+                        <div style="width:88px; height:88px; background:var(--beige); flex-shrink:0;">
+                            @if (item.ImageUrl != null)
+                            {
+                                <img src="@item.ImageUrl" style="width:100%; height:100%; object-fit:cover;" alt="@item.ProductName" />
+                            }
+                        </div>
+                        <div style="flex:1;">
+                            <div class="as-serif" style="font-size:17px; font-weight:700;">@item.ProductName</div>
+                            <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">@item.UnitPrice.ToString("C2")</div>
+                        </div>
+                        <form asp-action="UpdateQuantity" method="post" style="display:flex; align-items:center; border:1px solid var(--line);">
                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
-                            <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm" style="width:70px;" />
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">↻</button>
+                            <input type="number" name="quantity" value="@item.Quantity" min="1" style="width:50px; height:40px; border:none; text-align:center; font-size:14px;" />
+                            <button type="submit" style="width:34px; height:40px; border:none; background:transparent; cursor:pointer;">↻</button>
                         </form>
-                    </td>
-                    <td>@item.Subtotal.ToString("C2")</td>
-                    <td>
+                        <div style="width:80px; text-align:right; font-weight:600;">@item.Subtotal.ToString("C2")</div>
                         <form asp-action="RemoveItem" method="post">
                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Kaldır</button>
+                            <button type="submit" style="border:none; background:transparent; color:var(--ink-soft); cursor:pointer; font-size:13px; text-decoration:underline;">Kaldır</button>
                         </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="4" class="text-end">Toplam</th>
-                <th colspan="2">@Model.Total.ToString("C2")</th>
-            </tr>
-        </tfoot>
-    </table>
+                    </div>
+                }
 
-    <a asp-controller="Orders" asp-action="Checkout" class="btn btn-primary">Siparişi Tamamla</a>
-}
+                <a asp-controller="Products" asp-action="Index" style="display:inline-block; margin-top:24px; font-size:14px; font-weight:600;">&larr; Alışverişe Devam Et</a>
+            </div>
+
+            <!-- summary -->
+            <div style="background:var(--turquoise); padding:36px 32px;">
+                <div class="as-serif" style="font-size:20px; font-weight:700; margin-bottom:24px; color:var(--turquoise-deep);">Sipariş Özeti</div>
+                <div style="border-top:1px solid rgba(63,96,88,.25); padding-top:20px; display:flex; justify-content:space-between; font-size:18px; font-weight:700; margin-bottom:26px; color:var(--turquoise-deep);">
+                    <span>Toplam</span><span>@Model.Total.ToString("C2")</span>
+                </div>
+                <a asp-controller="Orders" asp-action="Checkout" class="as-pill" style="width:100%; background:var(--turquoise-deep); color:var(--cream); display:flex;">Siparişi Tamamla</a>
+            </div>
+        </div>
+    }
+</div>
