@@ -1,19 +1,26 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Pastane</title>
+    <title>@ViewData["Title"] - Atelier Sura</title>
     <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400..900;1,400..900&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/atelier-sura.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PastaneApp.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="as-announcement">
+        Her Gün Sınırlı Sayıda &middot; Saf Lezzetin Mimarisi
+    </div>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pastane</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm as-navbar">
+            <div class="container-fluid" style="max-width:1280px;">
+                <a class="navbar-brand as-brand" lang="en" asp-area="" asp-controller="Home" asp-action="Index">Atelier Sura</a>
+                <span class="d-none d-sm-inline-block" style="width:1px; height:22px; background:var(--line); margin:0 28px;"></span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,16 +28,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                            <a class="nav-link as-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Ürünler</a>
+                            <a class="nav-link as-nav-link" asp-area="" asp-controller="Products" asp-action="Index">Ürünler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Sepetim</a>
+                            <a class="nav-link as-nav-link" asp-area="" asp-controller="Cart" asp-action="Index">Sepetim</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Siparişlerim</a>
+                            <a class="nav-link as-nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Siparişlerim</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -38,16 +45,37 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Pastane - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="as-footer">
+        <div style="max-width:1280px; margin:0 auto; padding:64px 48px 40px; display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px;">
+            <div>
+                <div class="as-serif" lang="en" style="font-size:22px; font-weight:700; margin-bottom:14px; letter-spacing:.03em; text-transform:uppercase;">Atelier Sura</div>
+                <p style="font-size:14px; line-height:1.7; color:#C9BBA8; max-width:320px;">Bültenimize katıl, yeni ürünlerden ilk sen haberdar ol.</p>
+                <div style="display:flex; margin-top:16px; max-width:320px;">
+                    <input placeholder="E-posta adresin" style="flex:1; padding:12px 16px; border:1px solid #5B4C3C; background:transparent; color:var(--cream); font-size:14px;" />
+                    <button style="padding:12px 20px; border:none; background:var(--butter); color:var(--ink); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;">Katıl</button>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--butter); margin-bottom:16px;">Keşfet</div>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;">
+                    <a asp-controller="Products" asp-action="Index">Ürünler</a>
+                    <a asp-controller="Orders" asp-action="Index">Siparişlerim</a>
+                    <a asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--butter); margin-bottom:16px;">İletişim</div>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;">
+                    <a href="mailto:basersura@gmail.com">basersura@gmail.com</a>
+                    <a href="tel:+905466776166">+90 546 677 61 66</a>
+                </div>
+            </div>
         </div>
+        <div style="border-top:1px solid #4A3B2C; padding:20px 48px; text-align:center; font-size:12px; color:#8F7F6B;">&copy; 2026 <span lang="en">Atelier Sura</span></div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,125 @@
+:root {
+  --cream: #FBF6EC;
+  --ink: #3D2B1C;
+  --ink-soft: #71604D;
+  --beige: #EAE0CC;
+  --beige-2: #DFCFAE;
+  --butter: #F2E6BC;
+  --turquoise: #A9CFC8;
+  --turquoise-deep: #3F6058;
+  --accent-deep: #8A6B45;
+  --line: #E6D9C3;
+  --ok: #4F7A5C;
+  --ok-bg: #E3ECE4;
+  --off: #9A6B4A;
+  --off-bg: #F2E5DA;
+}
+
+html {
+  background: var(--cream);
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Work Sans', system-ui, sans-serif;
+  margin: 0;
+}
+
+a {
+  color: var(--accent-deep);
+}
+a:hover {
+  color: var(--ink);
+}
+
+.as-serif {
+  font-family: 'Bitter', Georgia, 'Times New Roman', serif;
+}
+
+.as-announcement {
+  background: var(--ink);
+  color: var(--cream);
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.as-navbar {
+  background: var(--cream) !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding: 22px 0;
+}
+
+.as-brand {
+  font-family: 'Bitter', Georgia, serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--ink) !important;
+}
+
+.as-nav-link {
+  color: var(--ink) !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+.as-nav-link:hover {
+  color: var(--accent-deep) !important;
+}
+
+.as-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  padding: 15px 32px;
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: var(--ink);
+  color: var(--cream);
+  text-decoration: none;
+}
+.as-pill:hover { background: var(--accent-deep); color: var(--cream); }
+
+.as-tile {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--beige);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.as-tile-placeholder {
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  opacity: .65;
+}
+
+.as-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.as-footer {
+  background: var(--ink);
+  color: var(--cream);
+}
+.as-footer a { color: #E9DFD1; }
+.as-footer a:hover { color: var(--cream); }
