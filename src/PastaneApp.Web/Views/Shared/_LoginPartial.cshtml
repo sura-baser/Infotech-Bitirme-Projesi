@@ -12,8 +12,11 @@
                 <a class="nav-link as-nav-link" asp-area="Admin" asp-controller="Categories" asp-action="Index">Admin Paneli</a>
             </li>
         }
-        <li class="nav-item">
-            <span class="nav-link as-nav-link">Merhaba, @User.Identity!.Name</span>
+        var currentUser = await UserManager.GetUserAsync(User);
+        var displayName = !string.IsNullOrWhiteSpace(currentUser?.FullName) ? currentUser.FullName : User.Identity!.Name;
+        <li class="nav-item d-flex align-items-center">
+            <span class="nav-link as-nav-link" style="color:var(--accent-deep); padding-right:8px;">Merhaba</span>
+            <span style="background:var(--butter); color:var(--ink); font-weight:600; font-size:14px; padding:5px 12px;">@displayName!</span>
         </li>
         <li class="nav-item">
             <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">

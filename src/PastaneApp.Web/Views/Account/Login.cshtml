@@ -4,34 +4,34 @@
     ViewData["Title"] = "Giriş Yap";
 }
 
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <h1 class="mb-4">Giriş Yap</h1>
-        <form asp-action="Login" method="post">
-            <input type="hidden" asp-for="ReturnUrl" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div style="max-width:440px; margin:0 auto; padding:60px 24px 120px;">
+    <h1 class="as-serif" style="font-size:34px; font-weight:700; margin:0 0 32px;">Giriş Yap</h1>
+    <form asp-action="Login" method="post">
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div asp-validation-summary="ModelOnly" style="color:#B3261E; margin-bottom:16px;"></div>
 
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" autocomplete="email" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+        <div style="margin-bottom:20px;">
+            <label asp-for="Email" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+            <input asp-for="Email" autocomplete="email" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+            <span asp-validation-for="Email" style="color:#B3261E; font-size:13px;"></span>
+        </div>
 
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" class="form-control" autocomplete="current-password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+        <div style="margin-bottom:20px;">
+            <label asp-for="Password" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+            <input asp-for="Password" autocomplete="current-password" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+            <span asp-validation-for="Password" style="color:#B3261E; font-size:13px;"></span>
+        </div>
 
-            <div class="mb-3 form-check">
-                <input asp-for="RememberMe" class="form-check-input" />
-                <label asp-for="RememberMe" class="form-check-label"></label>
-            </div>
+        <label style="display:flex; align-items:center; gap:9px; font-size:14px; color:var(--ink-soft); margin-bottom:28px; cursor:pointer;">
+            <input asp-for="RememberMe" style="accent-color:var(--ink); width:15px; height:15px;" />
+            @Html.DisplayNameFor(m => m.RememberMe)
+        </label>
 
-            <button type="submit" class="btn btn-primary">Giriş Yap</button>
-            <a asp-action="Register" class="btn btn-link">Hesabın yok mu? Kayıt ol</a>
-        </form>
-    </div>
+        <div style="display:flex; align-items:center; gap:20px;">
+            <button type="submit" class="as-pill">Giriş Yap</button>
+            <a asp-action="Register" style="font-size:14px;">Hesabın yok mu? Kayıt ol</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

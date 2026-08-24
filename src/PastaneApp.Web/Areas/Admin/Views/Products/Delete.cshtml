@@ -4,13 +4,15 @@
     ViewData["Title"] = "Ürün Sil";
 }
 
-<h1 class="mb-4">Ürünü Sil</h1>
+<h1 class="as-serif" style="font-size:28px; font-weight:700; margin:0 0 24px;">Ürünü Sil</h1>
 
-<div class="alert alert-warning">
+<div style="background:var(--off-bg); color:var(--off); padding:16px 20px; margin-bottom:24px; font-size:14px; max-width:480px;">
     <strong>@Model.Name</strong> ürününü silmek istediğine emin misin?
 </div>
 
 <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-    <button type="submit" class="btn btn-danger">Evet, Sil</button>
-    <a asp-action="Index" class="btn btn-link">İptal</a>
+    <div style="display:flex; align-items:center; gap:16px;">
+        <button type="submit" class="as-pill" style="background:#B3261E;">Evet, Sil</button>
+        <a asp-action="Index" style="font-size:14px; color:var(--ink-soft);">İptal</a>
+    </div>
 </form>

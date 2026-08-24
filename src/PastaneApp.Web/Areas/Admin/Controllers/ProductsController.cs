@@ -20,7 +20,7 @@ public class ProductsController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var products = await _unitOfWork.Repository<Product>().GetAllAsync(p => p.Category);
+        var products = await _unitOfWork.Repository<Product>().GetAllAsync(p => p.Category, p => p.Images);
         return View(products);
     }
 

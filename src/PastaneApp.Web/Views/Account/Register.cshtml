@@ -4,40 +4,40 @@
     ViewData["Title"] = "Kayıt Ol";
 }
 
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <h1 class="mb-4">Kayıt Ol</h1>
-        <form asp-action="Register" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div style="max-width:440px; margin:0 auto; padding:60px 24px 120px;">
+    <h1 class="as-serif" style="font-size:34px; font-weight:700; margin:0 0 32px;">Kayıt Ol</h1>
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly" style="color:#B3261E; margin-bottom:16px;"></div>
 
-            <div class="mb-3">
-                <label asp-for="FullName" class="form-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
+        <div style="margin-bottom:20px;">
+            <label asp-for="FullName" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+            <input asp-for="FullName" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+            <span asp-validation-for="FullName" style="color:#B3261E; font-size:13px;"></span>
+        </div>
 
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" autocomplete="email" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+        <div style="margin-bottom:20px;">
+            <label asp-for="Email" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+            <input asp-for="Email" autocomplete="email" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+            <span asp-validation-for="Email" style="color:#B3261E; font-size:13px;"></span>
+        </div>
 
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" class="form-control" autocomplete="new-password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+        <div style="margin-bottom:20px;">
+            <label asp-for="Password" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+            <input asp-for="Password" autocomplete="new-password" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+            <span asp-validation-for="Password" style="color:#B3261E; font-size:13px;"></span>
+        </div>
 
-            <div class="mb-3">
-                <label asp-for="ConfirmPassword" class="form-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
+        <div style="margin-bottom:28px;">
+            <label asp-for="ConfirmPassword" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+            <input asp-for="ConfirmPassword" autocomplete="new-password" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+            <span asp-validation-for="ConfirmPassword" style="color:#B3261E; font-size:13px;"></span>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
-            <a asp-action="Login" class="btn btn-link">Zaten hesabın var mı? Giriş yap</a>
-        </form>
-    </div>
+        <div style="display:flex; align-items:center; gap:20px;">
+            <button type="submit" class="as-pill">Kayıt Ol</button>
+            <a asp-action="Login" style="font-size:14px;">Zaten hesabın var mı? Giriş yap</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

@@ -6,57 +6,59 @@
     ViewData["Title"] = $"Sipariş #{Model.Id}";
 }
 
-<h1 class="mb-4">Sipariş #@Model.Id</h1>
+<h1 class="as-serif" style="font-size:28px; font-weight:700; margin:0 0 28px;">Sipariş #@Model.Id</h1>
 
-<div class="row mb-4">
-    <div class="col-md-6">
-        <p><strong>Müşteri:</strong> @(Model.ApplicationUser?.FullName ?? Model.ApplicationUser?.Email)</p>
-        <p><strong>Tarih:</strong> @Model.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</p>
-        <p><strong>Teslimat Adresi:</strong> @Model.DeliveryAddress</p>
-        <p><strong>Telefon:</strong> @Model.PhoneNumber</p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:32px; align-items:start;">
+    <div style="font-size:14px; color:var(--ink-soft); display:flex; flex-direction:column; gap:8px;">
+        <div><strong style="color:var(--ink);">Müşteri:</strong> @(Model.ApplicationUser?.FullName ?? Model.ApplicationUser?.Email)</div>
+        <div><strong style="color:var(--ink);">Tarih:</strong> @Model.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</div>
+        <div><strong style="color:var(--ink);">Teslimat Adresi:</strong> @Model.DeliveryAddress</div>
+        <div><strong style="color:var(--ink);">Telefon:</strong> @Model.PhoneNumber</div>
     </div>
-    <div class="col-md-6">
-        <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" class="d-flex align-items-end gap-2">
-            <div class="flex-grow-1">
-                <label class="form-label">Durum</label>
-                <select name="status" class="form-select">
+    <div>
+        <form asp-action="UpdateStatus" asp-route-id="@Model.Id" method="post" style="display:flex; align-items:end; gap:12px;">
+            <div style="flex:1;">
+                <label style="display:block; font-size:14px; margin-bottom:8px;">Durum</label>
+                <select name="status" class="form-select" style="border-radius:0; border-color:var(--line);">
                     @foreach (OrderStatus status in Enum.GetValues<OrderStatus>())
                     {
                         <option value="@status" selected="@(status == Model.Status)">@OrderStatusHelper.GetDisplayName(status)</option>
                     }
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Güncelle</button>
+            <button type="submit" class="as-pill" style="padding:12px 24px;">Güncelle</button>
         </form>
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Ürün</th>
-            <th>Birim Fiyat</th>
-            <th>Adet</th>
-            <th>Ara Toplam</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.OrderDetails)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.UnitPrice.ToString("C2")</td>
-                <td>@item.Quantity</td>
-                <td>@((item.UnitPrice * item.Quantity).ToString("C2"))</td>
+<div style="background:#fff; border:1px solid var(--line); box-shadow:0 2px 14px rgba(61,43,28,.06); margin-bottom:24px;">
+    <table style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr style="background:var(--cream);">
+                <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Ürün</th>
+                <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Birim Fiyat</th>
+                <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Adet</th>
+                <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Ara Toplam</th>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <th colspan="3" class="text-end">Toplam</th>
-            <th>@Model.TotalAmount.ToString("C2")</th>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderDetails)
+            {
+                <tr>
+                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@item.ProductName</td>
+                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@item.UnitPrice.ToString("C2")</td>
+                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@item.Quantity</td>
+                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; font-weight:600;">@((item.UnitPrice * item.Quantity).ToString("C2"))</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="padding:14px 16px; text-align:right; font-weight:600; border-top:1px solid var(--line);">Toplam</td>
+                <td style="padding:14px 16px; font-weight:700; font-size:16px; border-top:1px solid var(--line);">@Model.TotalAmount.ToString("C2")</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
-<a asp-action="Index" class="btn btn-link">&larr; Sipariş Listesine Dön</a>
+<a asp-action="Index" style="font-size:14px; font-weight:600;">&larr; Sipariş Listesine Dön</a>

@@ -4,26 +4,28 @@
     ViewData["Title"] = "Kategori Düzenle";
 }
 
-<h1 class="mb-4">Kategori Düzenle</h1>
+<h1 class="as-serif" style="font-size:28px; font-weight:700; margin:0 0 28px;">Kategori Düzenle</h1>
 
-<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="col-md-6">
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" style="max-width:480px;">
     <input type="hidden" asp-for="Id" />
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" style="color:#B3261E; margin-bottom:16px;"></div>
 
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+    <div style="margin-bottom:20px;">
+        <label asp-for="Name" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+        <input asp-for="Name" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+        <span asp-validation-for="Name" style="color:#B3261E; font-size:13px;"></span>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+    <div style="margin-bottom:28px;">
+        <label asp-for="Description" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+        <textarea asp-for="Description" rows="3" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px; font-family:inherit;"></textarea>
+        <span asp-validation-for="Description" style="color:#B3261E; font-size:13px;"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Kaydet</button>
-    <a asp-action="Index" class="btn btn-link">İptal</a>
+    <div style="display:flex; align-items:center; gap:16px;">
+        <button type="submit" class="as-pill">Kaydet</button>
+        <a asp-action="Index" style="font-size:14px; color:var(--ink-soft);">İptal</a>
+    </div>
 </form>
 
 @section Scripts {
