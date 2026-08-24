@@ -4,73 +4,75 @@
     ViewData["Title"] = "Ürünler";
 }
 
-<div class="row">
-    <div class="col-md-3 mb-4">
-        <form method="get" asp-action="Index">
-            <div class="mb-3">
-                <label class="form-label">Ara</label>
-                <input type="text" name="search" value="@Model.Search" class="form-control" placeholder="Ürün ara..." />
-            </div>
+<div style="max-width:1280px; margin:0 auto; padding:28px 24px 12px;">
+    <h1 class="as-serif" style="font-size:40px; font-weight:700; margin:0;">Ürünlerimiz</h1>
+</div>
 
-            <div class="mb-3">
-                <label class="form-label">Kategori</label>
-                <select name="categoryId" class="form-select" asp-items="Model.Categories">
-                    <option value="">Tüm Kategoriler</option>
-                </select>
-            </div>
+<div style="max-width:1280px; margin:0 auto; padding:20px 24px 90px; display:grid; grid-template-columns:260px 1fr; gap:56px; align-items:start;">
 
-            @if (Model.AllAllergens.Any())
-            {
-                <div class="mb-3">
-                    <label class="form-label">Alerjen İçermesin</label>
+    <!-- filter sidebar -->
+    <form method="get" asp-action="Index" style="display:flex; flex-direction:column; gap:30px;">
+        <div>
+            <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px; font-weight:600;">Ara</div>
+            <input type="text" name="search" value="@Model.Search" placeholder="Ürün ara..." style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+        </div>
+
+        <div>
+            <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px; font-weight:600;">Kategori</div>
+            <select name="categoryId" class="form-select" asp-items="Model.Categories" style="border-radius:0; border-color:var(--line);">
+                <option value="">Tüm Kategoriler</option>
+            </select>
+        </div>
+
+        @if (Model.AllAllergens.Any())
+        {
+            <div>
+                <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px; font-weight:600;">Alerjen İçermesin</div>
+                <div style="display:flex; flex-direction:column; gap:10px;">
                     @foreach (var allergen in Model.AllAllergens)
                     {
-                        <div class="form-check">
-                            <input type="checkbox" name="excludeAllergenIds" value="@allergen.Id" class="form-check-input"
-                                   id="filter-allergen-@allergen.Id" checked="@Model.ExcludedAllergenIds.Contains(allergen.Id)" />
-                            <label class="form-check-label" for="filter-allergen-@allergen.Id">@allergen.Name</label>
-                        </div>
+                        <label style="display:flex; align-items:center; gap:9px; font-size:14px; color:var(--ink-soft); cursor:pointer;">
+                            <input type="checkbox" name="excludeAllergenIds" value="@allergen.Id" checked="@Model.ExcludedAllergenIds.Contains(allergen.Id)" style="accent-color:var(--ink); width:15px; height:15px;" />
+                            @allergen.Name
+                        </label>
                     }
                 </div>
-            }
-
-            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
-            <a asp-action="Index" class="btn btn-link w-100">Filtreleri Temizle</a>
-        </form>
-    </div>
-
-    <div class="col-md-9">
-        <h1 class="mb-4">Ürünlerimiz</h1>
-
-        @if (!Model.Products.Any())
-        {
-            <p class="text-muted">Aradığınız kriterlere uygun ürün bulunamadı.</p>
+            </div>
         }
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        <button type="submit" class="as-pill">Filtrele</button>
+        <a asp-action="Index" style="font-size:13px; color:var(--ink-soft); text-decoration:underline; text-align:center;">Filtreleri Temizle</a>
+    </form>
+
+    <!-- product grid -->
+    <div>
+        @if (!Model.Products.Any())
+        {
+            <p style="color:var(--ink-soft);">Aradığınız kriterlere uygun ürün bulunamadı.</p>
+        }
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 260px)); gap:32px 28px;">
             @foreach (var product in Model.Products)
             {
-                <div class="col">
-                    <a asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark">
-                        <div class="card h-100">
-                            @if (product.ImageUrl != null)
-                            {
-                                <img src="@product.ImageUrl" class="card-img-top" style="height:200px;object-fit:cover;" alt="@product.Name" />
-                            }
-                            else
-                            {
-                                <div class="d-flex align-items-center justify-content-center bg-light" style="height:200px;">
-                                    <span class="text-muted">Fotoğraf eklenmedi</span>
-                                </div>
-                            }
-                            <div class="card-body">
-                                <h5 class="card-title">@product.Name</h5>
-                                <p class="card-text text-muted mb-1">@product.CategoryName</p>
-                                <p class="card-text fw-bold">@product.Price.ToString("C2")</p>
-                            </div>
+                <a asp-action="Details" asp-route-id="@product.Id" style="text-decoration:none; color:inherit;">
+                    <div class="as-tile" style="margin-bottom:16px;">
+                        @if (product.ImageUrl != null)
+                        {
+                            <img src="@product.ImageUrl" style="width:100%; height:100%; object-fit:cover;" alt="@product.Name" />
+                        }
+                        else
+                        {
+                            <div class="as-tile-placeholder">fotoğraf</div>
+                        }
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <div class="as-serif" style="font-size:16px; font-weight:700;">@product.Name</div>
+                            <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">@product.CategoryName</div>
                         </div>
-                    </a>
-                </div>
+                        <div style="font-size:15px; font-weight:600;">@product.Price.ToString("C2")</div>
+                    </div>
+                </a>
             }
         </div>
     </div>
