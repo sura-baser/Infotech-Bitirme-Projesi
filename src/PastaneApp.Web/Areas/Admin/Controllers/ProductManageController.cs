@@ -44,7 +44,7 @@ public class ProductManageController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddImage(int productId, string imageUrl, ImageType imageType, int sortOrder)
+    public async Task<IActionResult> AddImage(int productId, string imageUrl, ImageType imageType, int sortOrder, string? label)
     {
         if (!string.IsNullOrWhiteSpace(imageUrl))
         {
@@ -53,7 +53,8 @@ public class ProductManageController : Controller
                 ProductId = productId,
                 ImageUrl = imageUrl.Trim(),
                 ImageType = imageType,
-                SortOrder = sortOrder
+                SortOrder = sortOrder,
+                Label = string.IsNullOrWhiteSpace(label) ? null : label.Trim()
             });
             await _unitOfWork.CompleteAsync();
         }

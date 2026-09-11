@@ -3,10 +3,12 @@
 
 @{
     ViewData["Title"] = Model.Product.Name;
-    var finishedImage = Model.Product.Images
+    var finishedImages = Model.Product.Images
         .Where(i => i.ImageType == ImageType.Finished)
         .OrderBy(i => i.SortOrder)
-        .FirstOrDefault();
+        .ToList();
+    var finishedImage = finishedImages.FirstOrDefault();
+    var hasFlavorOptions = finishedImages.Count > 1;
     var ingredientsImage = Model.Product.Images
         .Where(i => i.ImageType == ImageType.Ingredients)
         .OrderBy(i => i.SortOrder)
@@ -38,7 +40,19 @@
             @if (finishedImage != null)
             {
                 <div class="as-tile" style="margin-bottom:16px;">
-                    <img src="@finishedImage.ImageUrl" style="width:100%; height:100%; object-fit:cover;" alt="@Model.Product.Name" />
+                    <img id="main-product-image" src="@finishedImage.ImageUrl" style="width:100%; height:100%; object-fit:cover;" alt="@Model.Product.Name" />
+                </div>
+            }
+
+            @if (hasFlavorOptions)
+            {
+                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+                    @foreach (var image in finishedImages)
+                    {
+                        <button type="button" class="as-chip flavor-option @(image == finishedImage ? "active" : "")" data-image-url="@image.ImageUrl" style="cursor:pointer; background:none; @(image == finishedImage ? "border-color:var(--ink); color:var(--ink); font-weight:600;" : "")">
+                            @(string.IsNullOrWhiteSpace(image.Label) ? "Seçenek" : image.Label)
+                        </button>
+                    }
                 </div>
             }
 
@@ -76,7 +90,22 @@
 
         @if (!string.IsNullOrWhiteSpace(Model.Product.Description))
         {
-            <p style="font-size:16px; line-height:1.75; color:var(--ink-soft); margin:0 0 28px;">@Model.Product.Description</p>
+            <p style="font-size:16px; line-height:1.75; color:var(--ink-soft); margin:0 0 @(string.IsNullOrWhiteSpace(Model.Product.Highlights) ? "28px" : "14px");">@Model.Product.Description</p>
+        }
+
+        @{
+            var highlights = (Model.Product.Highlights ?? string.Empty)
+                .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToList();
+        }
+        @if (highlights.Any())
+        {
+            <ul style="font-size:15px; line-height:1.8; color:var(--ink-soft); margin:0 0 28px; padding-left:20px;">
+                @foreach (var highlight in highlights)
+                {
+                    <li>@highlight</li>
+                }
+            </ul>
         }
 
         @if (Model.AllergenNames.Any())
@@ -119,6 +148,25 @@
                 var revealed = overlay.style.opacity === '1';
                 overlay.style.opacity = revealed ? '0' : '1';
                 label.textContent = revealed ? label.dataset.initialText : 'Tekrar Dokunun';
+            });
+        });
+
+        document.querySelectorAll('.flavor-option').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var mainImage = document.getElementById('main-product-image');
+                if (mainImage) {
+                    mainImage.src = button.dataset.imageUrl;
+                }
+                document.querySelectorAll('.flavor-option').forEach(function (btn) {
+                    btn.classList.remove('active');
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                    btn.style.fontWeight = '';
+                });
+                button.classList.add('active');
+                button.style.borderColor = 'var(--ink)';
+                button.style.color = 'var(--ink)';
+                button.style.fontWeight = '600';
             });
         });
     </script>

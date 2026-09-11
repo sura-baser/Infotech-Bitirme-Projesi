@@ -24,7 +24,18 @@ public class HomeController : Controller
 
         var model = new HomeIndexViewModel
         {
-            Categories = categories.ToList(),
+            Categories = categories.Select(c => new CategoryCardViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                ImageUrl = products
+                    .Where(p => p.CategoryId == c.Id)
+                    .SelectMany(p => p.Images)
+                    .Where(i => i.ImageType == ImageType.Finished)
+                    .OrderBy(i => i.SortOrder)
+                    .Select(i => i.ImageUrl)
+                    .FirstOrDefault()
+            }).ToList(),
             FeaturedProducts = products
                 .Where(p => p.IsActive)
                 .Take(3)
