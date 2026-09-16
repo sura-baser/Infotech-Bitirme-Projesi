@@ -24,7 +24,7 @@ public class HomeController : Controller
 
         var model = new HomeIndexViewModel
         {
-            Categories = categories.Select(c => new CategoryCardViewModel
+            Categories = categories.Where(c => c.ShowOnHome).Select(c => new CategoryCardViewModel
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -37,7 +37,7 @@ public class HomeController : Controller
                     .FirstOrDefault()
             }).ToList(),
             FeaturedProducts = products
-                .Where(p => p.IsActive)
+                .Where(p => p.IsActive && (p.Category?.ShowOnHome ?? false))
                 .Take(3)
                 .Select(p => new ProductCardViewModel
                 {

@@ -10,7 +10,10 @@
         <div style="font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:20px;">El Yapımı · Günlük Taze</div>
         <h1 class="as-serif" style="font-size:56px; line-height:1.08; font-weight:700; margin:0 0 26px;">Atölyeden Sofranıza,<br />Zarafetle</h1>
         <p style="font-size:17px; line-height:1.7; color:var(--ink-soft); max-width:460px; margin:0 0 36px;">Görsel zarafet, dengeli katmanlar. En taze mevsim lezzetleriyle, özel anlarınıza eşlik etmesi için sayılı adette hazırlanan imza tatlar.</p>
-        <a asp-controller="Products" asp-action="Index" class="as-pill">Ürünleri Keşfet</a>
+        <div style="display:flex; flex-wrap:wrap; gap:16px;">
+            <a asp-controller="Products" asp-action="Index" class="as-pill">Ürünleri Keşfet</a>
+            <a asp-controller="PartyBox" asp-action="Index" class="as-pill as-pill-bordo">Parti Kutunu Kendin Oluştur!</a>
+        </div>
     </div>
     <div class="as-tile">
         <img src="~/images/products/hero-san-sebastian.jpg" alt="El yapımı San Sebastian" style="width:100%; height:100%; object-fit:cover;" />

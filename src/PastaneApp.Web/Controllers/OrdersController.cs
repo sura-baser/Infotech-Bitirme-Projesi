@@ -101,7 +101,8 @@ public class OrdersController : Controller
                 ProductId = product.Id,
                 ProductName = product.Name,
                 UnitPrice = product.Price,
-                Quantity = item.Quantity
+                Quantity = item.Quantity,
+                CustomizationNotes = item.CustomizationNotes
             });
 
             product.Stock = Math.Max(0, product.Stock - item.Quantity);

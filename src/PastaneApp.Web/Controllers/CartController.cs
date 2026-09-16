@@ -11,6 +11,8 @@ namespace PastaneApp.Web.Controllers;
 [Authorize]
 public class CartController : Controller
 {
+    private const int MaxQuantityPerProduct = 2;
+
     private readonly IUnitOfWork _unitOfWork;
 
     public CartController(IUnitOfWork unitOfWork)
@@ -36,6 +38,7 @@ public class CartController : Controller
                 ProductName = products.TryGetValue(ci.ProductId, out var p) ? p.Name : "Ürün bulunamadı",
                 UnitPrice = products.TryGetValue(ci.ProductId, out var p2) ? p2.Price : 0,
                 Quantity = ci.Quantity,
+                CustomizationNotes = ci.CustomizationNotes,
                 ImageUrl = products.TryGetValue(ci.ProductId, out var p3)
                     ? p3.Images.Where(i => i.ImageType == ImageType.Finished).OrderBy(i => i.SortOrder).Select(i => i.ImageUrl).FirstOrDefault()
                     : null
@@ -61,7 +64,7 @@ public class CartController : Controller
 
         if (existing is not null)
         {
-            existing.Quantity += quantity;
+            existing.Quantity = Math.Min(existing.Quantity + quantity, MaxQuantityPerProduct);
             _unitOfWork.Repository<CartItem>().Update(existing);
         }
         else
@@ -70,12 +73,48 @@ public class CartController : Controller
             {
                 CartId = cart.Id,
                 ProductId = productId,
-                Quantity = quantity
+                Quantity = Math.Min(quantity, MaxQuantityPerProduct)
             });
         }
 
         await _unitOfWork.CompleteAsync();
         TempData["Success"] = "Ürün sepete eklendi.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddPartyBox(int boxProductId, Dictionary<string, int> quantities)
+    {
+        var boxProduct = await _unitOfWork.Repository<Product>().GetByIdAsync(boxProductId);
+        if (boxProduct is null || !boxProduct.IsActive)
+        {
+            return NotFound();
+        }
+
+        var pieceCount = PartyBoxController.ParsePieceCount(boxProduct.ServingInfo);
+        var selected = quantities.Where(kv => kv.Value > 0).ToList();
+        var totalSelected = selected.Sum(kv => kv.Value);
+
+        if (pieceCount <= 0 || totalSelected != pieceCount)
+        {
+            TempData["Error"] = $"Seçtiğin toplam parça sayısı ({totalSelected}) kutunun boyutuyla ({pieceCount} parça) eşleşmiyor.";
+            return RedirectToAction("Index", "PartyBox");
+        }
+
+        var notes = string.Join(", ", selected.Select(kv => $"{kv.Value}x {kv.Key}"));
+
+        var cart = await GetOrCreateCartAsync();
+        await _unitOfWork.Repository<CartItem>().AddAsync(new CartItem
+        {
+            CartId = cart.Id,
+            ProductId = boxProduct.Id,
+            Quantity = 1,
+            CustomizationNotes = notes
+        });
+
+        await _unitOfWork.CompleteAsync();
+        TempData["Success"] = "Parti kutun sepete eklendi.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -95,7 +134,7 @@ public class CartController : Controller
         }
         else
         {
-            item.Quantity = quantity;
+            item.Quantity = Math.Min(quantity, MaxQuantityPerProduct);
             _unitOfWork.Repository<CartItem>().Update(item);
         }
 

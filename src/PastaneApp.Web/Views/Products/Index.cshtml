@@ -51,7 +51,7 @@
             <p style="color:var(--ink-soft);">Aradığınız kriterlere uygun ürün bulunamadı.</p>
         }
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 260px)); gap:32px 28px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 340px)); gap:36px 32px;">
             @foreach (var product in Model.Products)
             {
                 <a asp-action="Details" asp-route-id="@product.Id" style="text-decoration:none; color:inherit;">

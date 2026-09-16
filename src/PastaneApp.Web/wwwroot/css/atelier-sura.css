@@ -13,6 +13,8 @@
   --ok-bg: #E3ECE4;
   --off: #9A6B4A;
   --off-bg: #F2E5DA;
+  --bordo: #AB1A20;
+  --bordo-deep: #7A1015;
 }
 
 html {
@@ -96,6 +98,12 @@ a:hover {
   text-decoration: none;
 }
 .as-pill:hover { background: var(--accent-deep); color: var(--cream); }
+
+.as-pill-bordo {
+  background: var(--bordo);
+  color: var(--cream);
+}
+.as-pill-bordo:hover { background: var(--bordo-deep); color: var(--cream); }
 
 .as-tile {
   width: 100%;

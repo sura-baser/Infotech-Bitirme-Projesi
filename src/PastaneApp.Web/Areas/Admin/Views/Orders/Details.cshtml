@@ -45,7 +45,13 @@
             @foreach (var item in Model.OrderDetails)
             {
                 <tr>
-                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@item.ProductName</td>
+                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">
+                        @item.ProductName
+                        @if (!string.IsNullOrWhiteSpace(item.CustomizationNotes))
+                        {
+                            <div style="font-size:12px; color:var(--ink-soft); margin-top:4px;">@item.CustomizationNotes</div>
+                        }
+                    </td>
                     <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@item.UnitPrice.ToString("C2")</td>
                     <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@item.Quantity</td>
                     <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; font-weight:600;">@((item.UnitPrice * item.Quantity).ToString("C2"))</td>

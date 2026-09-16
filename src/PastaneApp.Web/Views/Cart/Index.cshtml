@@ -29,11 +29,15 @@
                         </div>
                         <div style="flex:1;">
                             <div class="as-serif" style="font-size:17px; font-weight:700;">@item.ProductName</div>
+                            @if (!string.IsNullOrWhiteSpace(item.CustomizationNotes))
+                            {
+                                <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">@item.CustomizationNotes</div>
+                            }
                             <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">@item.UnitPrice.ToString("C2")</div>
                         </div>
                         <form asp-action="UpdateQuantity" method="post" style="display:flex; align-items:center; border:1px solid var(--line);">
                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
-                            <input type="number" name="quantity" value="@item.Quantity" min="1" style="width:50px; height:40px; border:none; text-align:center; font-size:14px;" />
+                            <input type="number" name="quantity" value="@item.Quantity" min="1" max="2" style="width:50px; height:40px; border:none; text-align:center; font-size:14px;" />
                             <button type="submit" style="width:34px; height:40px; border:none; background:transparent; cursor:pointer;">↻</button>
                         </form>
                         <div style="width:80px; text-align:right; font-weight:600;">@item.Subtotal.ToString("C2")</div>

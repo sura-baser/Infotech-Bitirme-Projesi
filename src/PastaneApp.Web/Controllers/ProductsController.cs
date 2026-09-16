@@ -21,13 +21,14 @@ public class ProductsController : Controller
         var products = await _unitOfWork.Repository<Product>().GetAllAsync(p => p.Category, p => p.Images);
         var productAllergens = await _unitOfWork.Repository<ProductAllergen>().GetAllAsync();
         var allergens = await _unitOfWork.Repository<Allergen>().GetAllAsync();
-        var categories = await _unitOfWork.Repository<Category>().GetAllAsync();
+        var categories = (await _unitOfWork.Repository<Category>().GetAllAsync()).Where(c => c.ShowOnHome).ToList();
+        var visibleCategoryIds = categories.Select(c => c.Id).ToHashSet();
 
         var allergenLookup = productAllergens
             .GroupBy(pa => pa.ProductId)
             .ToDictionary(g => g.Key, g => g.Select(pa => pa.AllergenId).ToHashSet());
 
-        IEnumerable<Product> query = products.Where(p => p.IsActive);
+        IEnumerable<Product> query = products.Where(p => p.IsActive && visibleCategoryIds.Contains(p.CategoryId));
 
         if (categoryId.HasValue)
         {

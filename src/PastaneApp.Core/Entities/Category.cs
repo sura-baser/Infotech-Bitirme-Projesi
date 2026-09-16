@@ -4,6 +4,7 @@ public class Category : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
+    public bool ShowOnHome { get; set; } = true;
 
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }
