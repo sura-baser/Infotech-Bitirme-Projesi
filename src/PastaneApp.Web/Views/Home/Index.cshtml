@@ -27,7 +27,7 @@
         <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:24px;">
             @foreach (var category in Model.Categories)
             {
-                <a asp-controller="Products" asp-action="Index" asp-route-categoryId="@category.Id" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; align-items:center; gap:14px;">
+                <a asp-controller="Products" asp-action="Index" asp-route-categoryId="@category.Id" class="category-card" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; align-items:center; gap:14px;">
                     <div class="as-tile" style="background:var(--cream);">
                         @if (category.ImageUrl != null)
                         {

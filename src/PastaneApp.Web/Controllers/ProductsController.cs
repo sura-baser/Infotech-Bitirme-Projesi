@@ -62,7 +62,7 @@ public class ProductsController : Controller
         var model = new ProductListViewModel
         {
             Products = cards,
-            Categories = categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList(),
+            Categories = categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name, Selected = c.Id == categoryId }).ToList(),
             AllAllergens = allergens.OrderBy(a => a.Name).ToList(),
             SelectedCategoryId = categoryId,
             ExcludedAllergenIds = excluded.ToList(),

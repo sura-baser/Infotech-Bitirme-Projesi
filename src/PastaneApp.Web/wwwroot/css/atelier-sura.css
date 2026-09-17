@@ -116,6 +116,28 @@ a:hover {
   overflow: hidden;
 }
 
+.category-card {
+  position: relative;
+  transition: transform .25s ease;
+}
+.category-card:hover {
+  transform: scale(1.07);
+  z-index: 2;
+}
+.category-card:hover .as-tile {
+  box-shadow: 0 14px 30px rgba(61,43,28,.22);
+}
+
+.size-option {
+  position: relative;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.size-option:hover {
+  transform: scale(1.05);
+  z-index: 2;
+  box-shadow: 0 14px 30px rgba(61,43,28,.18);
+}
+
 .as-tile-placeholder {
   font-size: 11px;
   letter-spacing: .1em;

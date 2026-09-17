@@ -32,7 +32,7 @@ public class PartyBoxController : Controller
         var flavors = flavorProducts
             .Where(p => FlavorProductNames.Contains(p.Name))
             .SelectMany(p => p.Images
-                .Where(i => i.ImageType == ImageType.Finished)
+                .Where(i => i.ImageType == ImageType.Process)
                 .OrderBy(i => i.SortOrder)
                 .Select(i => new PartyBoxFlavorOption
                 {

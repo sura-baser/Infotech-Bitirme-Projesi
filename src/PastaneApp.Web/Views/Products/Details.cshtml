@@ -24,7 +24,6 @@
         ? processImages.FirstOrDefault(i => i.Label == finishedImage.Label) ?? processImages.FirstOrDefault()
         : processImages.FirstOrDefault();
     var hasReveal = ingredientsImage != null && processImage != null;
-    var ingredientsText = string.Join(", ", Model.Product.Ingredients.OrderBy(i => i.SortOrder).Select(i => i.Name));
 }
 
 <div style="max-width:1280px; margin:0 auto; padding:12px 24px 20px; font-size:13px; color:var(--ink-soft);">
@@ -127,14 +126,6 @@
                         <span class="as-chip">@allergenName</span>
                     }
                 </div>
-            </div>
-        }
-
-        @if (!string.IsNullOrWhiteSpace(ingredientsText))
-        {
-            <div style="margin-bottom:34px;">
-                <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:12px;">İçindekiler</div>
-                <div style="font-size:15px; color:var(--ink-soft); line-height:1.8;">@ingredientsText</div>
             </div>
         }
 
