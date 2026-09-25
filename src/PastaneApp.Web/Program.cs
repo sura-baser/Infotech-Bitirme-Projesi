@@ -23,7 +23,16 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<IyzicoOptions>(builder.Configuration.GetSection(IyzicoOptions.SectionName));
-builder.Services.AddScoped<IPaymentGateway, IyzicoPaymentGateway>();
+var iyzicoConfigured = !string.IsNullOrWhiteSpace(builder.Configuration["Iyzico:ApiKey"])
+    && !string.IsNullOrWhiteSpace(builder.Configuration["Iyzico:SecretKey"]);
+if (builder.Environment.IsDevelopment() && !iyzicoConfigured)
+{
+    builder.Services.AddScoped<IPaymentGateway, DemoPaymentGateway>();
+}
+else
+{
+    builder.Services.AddScoped<IPaymentGateway, IyzicoPaymentGateway>();
+}
 
 var app = builder.Build();
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PastaneApp.Core.Entities;
@@ -90,6 +91,103 @@ public class AccountController : Controller
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> Profile()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        return View(await BuildProfilePageAsync(user));
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateProfile([Bind(Prefix = "Profile")] ProfileViewModel model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        if (!ModelState.IsValid)
+        {
+            model.Email = user.Email ?? string.Empty;
+            return View(nameof(Profile), new ProfilePageViewModel { Profile = model });
+        }
+
+        user.FullName = model.FullName.Trim();
+        user.PhoneNumber = string.IsNullOrWhiteSpace(model.PhoneNumber) ? null : model.PhoneNumber.Trim();
+        user.Address = string.IsNullOrWhiteSpace(model.Address) ? null : model.Address.Trim();
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            model.Email = user.Email ?? string.Empty;
+            return View(nameof(Profile), new ProfilePageViewModel { Profile = model });
+        }
+
+        TempData["Success"] = "Bilgileriniz güncellendi.";
+        return RedirectToAction(nameof(Profile));
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ChangePassword([Bind(Prefix = "Password")] ChangePasswordViewModel model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        if (!ModelState.IsValid)
+        {
+            var page = await BuildProfilePageAsync(user);
+            return View(nameof(Profile), page);
+        }
+
+        var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("Password", error.Description);
+            }
+
+            return View(nameof(Profile), await BuildProfilePageAsync(user));
+        }
+
+        await _signInManager.RefreshSignInAsync(user);
+        TempData["Success"] = "Şifreniz değiştirildi.";
+        return RedirectToAction(nameof(Profile));
+    }
+
+    private static Task<ProfilePageViewModel> BuildProfilePageAsync(ApplicationUser user)
+    {
+        return Task.FromResult(new ProfilePageViewModel
+        {
+            Profile = new ProfileViewModel
+            {
+                Email = user.Email ?? string.Empty,
+                FullName = user.FullName ?? string.Empty,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address
+            }
+        });
     }
 
     [HttpGet]

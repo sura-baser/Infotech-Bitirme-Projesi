@@ -1,0 +1,66 @@
+@model PastaneApp.Web.Models.Account.ProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Profilim";
+    const string field = "width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px; font-family:inherit;";
+    const string err = "color:#B3261E; font-size:13px;";
+}
+
+<div style="max-width:960px; margin:0 auto; padding:40px 24px 100px;">
+    <h1 class="as-serif" style="font-size:34px; font-weight:700; margin:0 0 8px;">Profilim</h1>
+    <a asp-controller="Orders" asp-action="Index" style="display:inline-block; font-size:14px; font-weight:600; margin-bottom:36px;">Siparişlerim &rarr;</a>
+
+    <div class="as-split" style="gap:56px;">
+        <form asp-action="UpdateProfile" method="post">
+            <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:18px;">Kişisel Bilgiler</div>
+            <div asp-validation-summary="ModelOnly" style="@err margin-bottom:12px;"></div>
+
+            <div style="margin-bottom:20px;">
+                <label asp-for="Profile.Email" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <input asp-for="Profile.Email" readonly style="@field background:var(--cream); color:var(--ink-soft);" />
+            </div>
+            <div style="margin-bottom:20px;">
+                <label asp-for="Profile.FullName" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <input asp-for="Profile.FullName" style="@field" />
+                <span asp-validation-for="Profile.FullName" style="@err"></span>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label asp-for="Profile.PhoneNumber" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <input asp-for="Profile.PhoneNumber" autocomplete="tel" style="@field" />
+                <span asp-validation-for="Profile.PhoneNumber" style="@err"></span>
+            </div>
+            <div style="margin-bottom:26px;">
+                <label asp-for="Profile.Address" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <textarea asp-for="Profile.Address" rows="3" style="@field"></textarea>
+                <span asp-validation-for="Profile.Address" style="@err"></span>
+            </div>
+            <button type="submit" class="as-pill">Bilgilerimi Kaydet</button>
+        </form>
+
+        <form asp-action="ChangePassword" method="post">
+            <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:18px;">Şifre Değiştir</div>
+            <span asp-validation-for="Password" style="@err display:block; margin-bottom:12px;"></span>
+
+            <div style="margin-bottom:20px;">
+                <label asp-for="Password.CurrentPassword" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <input asp-for="Password.CurrentPassword" autocomplete="current-password" style="@field" />
+                <span asp-validation-for="Password.CurrentPassword" style="@err"></span>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label asp-for="Password.NewPassword" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <input asp-for="Password.NewPassword" autocomplete="new-password" style="@field" />
+                <span asp-validation-for="Password.NewPassword" style="@err"></span>
+            </div>
+            <div style="margin-bottom:26px;">
+                <label asp-for="Password.ConfirmNewPassword" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+                <input asp-for="Password.ConfirmNewPassword" autocomplete="new-password" style="@field" />
+                <span asp-validation-for="Password.ConfirmNewPassword" style="@err"></span>
+            </div>
+            <button type="submit" class="as-pill">Şifreyi Değiştir</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
