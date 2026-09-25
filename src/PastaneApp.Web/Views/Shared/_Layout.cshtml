@@ -66,10 +66,11 @@
             <div>
                 <div class="as-serif" lang="en" style="font-size:22px; font-weight:700; margin-bottom:14px; letter-spacing:.03em; text-transform:uppercase;">Atelier Sura</div>
                 <p style="font-size:14px; line-height:1.7; color:#C9BBA8; max-width:320px;">Bültenimize katıl, yeni ürünlerden ilk sen haberdar ol.</p>
-                <div style="display:flex; margin-top:16px; max-width:320px;">
-                    <input placeholder="E-posta adresin" style="flex:1; padding:12px 16px; border:1px solid #5B4C3C; background:transparent; color:var(--cream); font-size:14px;" />
-                    <button style="padding:12px 20px; border:none; background:var(--butter); color:var(--ink); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;">Katıl</button>
-                </div>
+                <form id="newsletter-form" style="display:flex; margin-top:16px; max-width:320px;">
+                    <input type="email" aria-label="E-posta adresin" placeholder="E-posta adresin" style="flex:1; min-width:0; padding:12px 16px; border:1px solid #5B4C3C; background:transparent; color:var(--cream); font-size:14px;" />
+                    <button type="submit" style="padding:12px 20px; border:none; background:var(--butter); color:var(--ink); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;">Katıl</button>
+                </form>
+                <p id="newsletter-note" aria-live="polite" style="font-size:13px; color:var(--butter); margin:10px 0 0; min-height:18px;"></p>
             </div>
             <div>
                 <div style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--butter); margin-bottom:16px;">Keşfet</div>
@@ -77,6 +78,8 @@
                     <a asp-controller="Products" asp-action="Index">Ürünler</a>
                     <a asp-controller="Orders" asp-action="Index">Siparişlerim</a>
                     <a asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+                    <a asp-controller="Home" asp-action="Returns">İade ve İptal</a>
+                    <a asp-controller="Home" asp-action="DistanceSales">Mesafeli Satış Sözleşmesi</a>
                 </div>
             </div>
             <div>
@@ -93,5 +96,12 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        document.getElementById('newsletter-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('newsletter-note').textContent = 'Bülten çok yakında! Bizi takip etmeye devam et.';
+            this.reset();
+        });
+    </script>
 </body>
 </html>

@@ -332,3 +332,11 @@ a:hover {
   .as-cart-row > div:nth-child(2) { flex: 1 1 150px !important; }
 
 }
+
+/* Yasal sayfalar */
+.as-legal { font-size: 15px; line-height: 1.8; color: var(--ink-soft); }
+.as-legal h2 { font-size: 20px; font-weight: 700; color: var(--ink); margin: 32px 0 10px; }
+.as-legal p { margin: 0 0 12px; }
+.as-legal ul { margin: 0 0 12px; padding-left: 22px; }
+.as-legal li { margin-bottom: 6px; }
+.as-legal a { text-decoration: underline; }
