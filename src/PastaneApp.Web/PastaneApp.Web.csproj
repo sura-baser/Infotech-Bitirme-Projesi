@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PastaneApp.Core\PastaneApp.Core.csproj" />
     <ProjectReference Include="..\PastaneApp.Data\PastaneApp.Data.csproj" />
+    <ProjectReference Include="..\PastaneApp.Services\PastaneApp.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

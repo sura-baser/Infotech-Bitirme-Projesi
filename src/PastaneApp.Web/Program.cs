@@ -5,6 +5,7 @@ using PastaneApp.Core.Interfaces;
 using PastaneApp.Data;
 using PastaneApp.Data.Identity;
 using PastaneApp.Data.Seed;
+using PastaneApp.Services;
 using PastaneApp.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {

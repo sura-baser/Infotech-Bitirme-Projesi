@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PastaneApp.Core.Entities;
 using PastaneApp.Core.Enums;
-using PastaneApp.Core.Interfaces;
+using PastaneApp.Core.Services;
 
 namespace PastaneApp.Web.Areas.Admin.Controllers;
 
@@ -10,22 +9,21 @@ namespace PastaneApp.Web.Areas.Admin.Controllers;
 [Authorize(Roles = "Admin")]
 public class OrdersController : Controller
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IOrderService _orderService;
 
-    public OrdersController(IUnitOfWork unitOfWork)
+    public OrdersController(IOrderService orderService)
     {
-        _unitOfWork = unitOfWork;
+        _orderService = orderService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var orders = await _unitOfWork.Repository<Order>().GetAllAsync(o => o.ApplicationUser);
-        return View(orders.OrderByDescending(o => o.OrderDate).ToList());
+        return View(await _orderService.GetAllOrdersAsync());
     }
 
     public async Task<IActionResult> Details(int id)
     {
-        var order = await _unitOfWork.Repository<Order>().GetByIdAsync(id, o => o.ApplicationUser, o => o.OrderDetails);
+        var order = await _orderService.GetOrderWithCustomerAsync(id);
         if (order is null)
         {
             return NotFound();
@@ -38,15 +36,10 @@ public class OrdersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateStatus(int id, OrderStatus status)
     {
-        var order = await _unitOfWork.Repository<Order>().GetByIdAsync(id);
-        if (order is null)
+        if (!await _orderService.UpdateStatusAsync(id, status))
         {
             return NotFound();
         }
-
-        order.Status = status;
-        _unitOfWork.Repository<Order>().Update(order);
-        await _unitOfWork.CompleteAsync();
 
         TempData["Success"] = "Sipariş durumu güncellendi.";
         return RedirectToAction(nameof(Details), new { id });

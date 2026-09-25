@@ -1,69 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
-using PastaneApp.Core.Entities;
-using PastaneApp.Core.Enums;
-using PastaneApp.Core.Interfaces;
+using PastaneApp.Core.Services;
 using PastaneApp.Web.Models.PartyBox;
 
 namespace PastaneApp.Web.Controllers;
 
 public class PartyBoxController : Controller
 {
-    private static readonly string[] FlavorProductNames = { "Cookies", "Muffins", "Tiramisu Balls", "Cinnamon Roll" };
+    private readonly IPartyBoxService _partyBoxService;
 
-    private readonly IUnitOfWork _unitOfWork;
-
-    public PartyBoxController(IUnitOfWork unitOfWork)
+    public PartyBoxController(IPartyBoxService partyBoxService)
     {
-        _unitOfWork = unitOfWork;
+        _partyBoxService = partyBoxService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var boxCategory = (await _unitOfWork.Repository<Category>().FindAsync(c => c.Name == "Parti Kutusu")).FirstOrDefault();
-
-        var sizeProducts = boxCategory is null
-            ? new List<Product>()
-            : (await _unitOfWork.Repository<Product>().FindAsync(p => p.CategoryId == boxCategory.Id && p.IsActive))
-                .OrderBy(p => p.Price)
-                .ToList();
-
-        var flavorProducts = await _unitOfWork.Repository<Product>().GetAllAsync(p => p.Images);
-
-        var flavors = flavorProducts
-            .Where(p => FlavorProductNames.Contains(p.Name))
-            .SelectMany(p => p.Images
-                .Where(i => i.ImageType == ImageType.Process)
-                .OrderBy(i => i.SortOrder)
-                .Select(i => new PartyBoxFlavorOption
-                {
-                    Label = string.IsNullOrWhiteSpace(i.Label) ? p.Name : i.Label,
-                    ImageUrl = i.ImageUrl
-                }))
-            .ToList();
+        var options = await _partyBoxService.GetOptionsAsync();
 
         var model = new PartyBoxIndexViewModel
         {
-            Sizes = sizeProducts.Select(p => new PartyBoxSizeOption
+            Sizes = options.Sizes.Select(s => new PartyBoxSizeOption
             {
-                ProductId = p.Id,
-                Name = p.Name,
-                PieceCount = ParsePieceCount(p.ServingInfo),
-                Price = p.Price
+                ProductId = s.ProductId,
+                Name = s.Name,
+                PieceCount = s.PieceCount,
+                Price = s.Price
             }).ToList(),
-            Flavors = flavors
+            Flavors = options.Flavors.Select(f => new PartyBoxFlavorOption
+            {
+                Label = f.Label,
+                ImageUrl = f.ImageUrl
+            }).ToList()
         };
 
         return View(model);
-    }
-
-    internal static int ParsePieceCount(string? servingInfo)
-    {
-        if (string.IsNullOrWhiteSpace(servingInfo))
-        {
-            return 0;
-        }
-
-        var digits = new string(servingInfo.TakeWhile(char.IsDigit).ToArray());
-        return int.TryParse(digits, out var count) ? count : 0;
     }
 }

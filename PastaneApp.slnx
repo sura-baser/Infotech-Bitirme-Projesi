@@ -3,6 +3,7 @@
     <Project Path="src/PastaneApp.Api/PastaneApp.Api.csproj" />
     <Project Path="src/PastaneApp.Core/PastaneApp.Core.csproj" />
     <Project Path="src/PastaneApp.Data/PastaneApp.Data.csproj" />
+    <Project Path="src/PastaneApp.Services/PastaneApp.Services.csproj" />
     <Project Path="src/PastaneApp.Web/PastaneApp.Web.csproj" />
   </Folder>
 </Solution>
