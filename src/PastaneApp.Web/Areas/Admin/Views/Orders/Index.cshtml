@@ -20,6 +20,7 @@ else
                     <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">#</th>
                     <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Müşteri</th>
                     <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Tarih</th>
+                    <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Ödeme</th>
                     <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Durum</th>
                     <th style="text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:14px 16px;">Toplam</th>
                     <th style="padding:14px 16px;"></th>
@@ -32,6 +33,7 @@ else
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@order.Id</td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@(order.ApplicationUser?.FullName ?? order.ApplicationUser?.Email)</td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@order.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                        <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;"><span style="display:inline-flex; font-size:12px; font-weight:600; padding:4px 10px; @PaymentStatusHelper.GetBadgeStyle(order.PaymentStatus)">@PaymentStatusHelper.GetDisplayName(order.PaymentStatus)</span></td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@OrderStatusHelper.GetDisplayName(order.Status)</td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; font-weight:600;">@order.TotalAmount.ToString("C2")</td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); text-align:right;">

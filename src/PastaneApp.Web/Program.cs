@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PastaneApp.Core.Entities;
+using PastaneApp.Core.Interfaces;
 using PastaneApp.Data;
+using PastaneApp.Data.Identity;
 using PastaneApp.Data.Seed;
+using PastaneApp.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.SignIn.RequireConfirmedAccount = false;
     })
     .AddEntityFrameworkStores<AppDbContext>()
+    .AddErrorDescriber<TurkishIdentityErrorDescriber>()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<IyzicoOptions>(builder.Configuration.GetSection(IyzicoOptions.SectionName));
+builder.Services.AddScoped<IPaymentGateway, IyzicoPaymentGateway>();
 
 var app = builder.Build();
 

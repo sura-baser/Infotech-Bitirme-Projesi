@@ -46,6 +46,18 @@
         </nav>
     </header>
     <main role="main">
+        @if (TempData["Success"] is string successMessage)
+        {
+            <div style="max-width:1280px; margin:20px auto 0; padding:0 24px;">
+                <div style="background:var(--ok-bg); color:var(--ok); padding:14px 20px; font-size:14px;">@successMessage</div>
+            </div>
+        }
+        @if (TempData["Error"] is string errorMessage)
+        {
+            <div style="max-width:1280px; margin:20px auto 0; padding:0 24px;">
+                <div style="background:var(--off-bg); color:var(--off); padding:14px 20px; font-size:14px;">@errorMessage</div>
+            </div>
+        }
         @RenderBody()
     </main>
 

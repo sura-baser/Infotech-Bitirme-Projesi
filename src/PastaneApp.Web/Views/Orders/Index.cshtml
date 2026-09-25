@@ -1,3 +1,4 @@
+@using PastaneApp.Core.Enums
 @using PastaneApp.Web.Helpers
 @model IEnumerable<Order>
 
@@ -31,7 +32,7 @@
                     <tr>
                         <td style="padding:16px 16px 16px 0; border-bottom:1px solid var(--line); font-size:14px;">@order.Id</td>
                         <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px;">@order.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
-                        <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px;">@OrderStatusHelper.GetDisplayName(order.Status)</td>
+                        <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px;">@(order.PaymentStatus == PaymentStatus.Paid ? OrderStatusHelper.GetDisplayName(order.Status) : PaymentStatusHelper.GetDisplayName(order.PaymentStatus))</td>
                         <td style="padding:16px; border-bottom:1px solid var(--line); font-size:14px; font-weight:600;">@order.TotalAmount.ToString("C2")</td>
                         <td style="padding:16px; border-bottom:1px solid var(--line); text-align:right;">
                             <a asp-action="Details" asp-route-id="@order.Id" style="font-size:13px; font-weight:600;">Detay</a>

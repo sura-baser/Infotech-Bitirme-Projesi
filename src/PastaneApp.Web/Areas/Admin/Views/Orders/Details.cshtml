@@ -12,7 +12,12 @@
     <div style="font-size:14px; color:var(--ink-soft); display:flex; flex-direction:column; gap:8px;">
         <div><strong style="color:var(--ink);">Müşteri:</strong> @(Model.ApplicationUser?.FullName ?? Model.ApplicationUser?.Email)</div>
         <div><strong style="color:var(--ink);">Tarih:</strong> @Model.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</div>
-        <div><strong style="color:var(--ink);">Teslimat Adresi:</strong> @Model.DeliveryAddress</div>
+        <div><strong style="color:var(--ink);">Ödeme:</strong> <span style="display:inline-flex; font-size:12px; font-weight:600; padding:3px 10px; @PaymentStatusHelper.GetBadgeStyle(Model.PaymentStatus)">@PaymentStatusHelper.GetDisplayName(Model.PaymentStatus)</span>@(Model.PaidAt.HasValue ? $" · {Model.PaidAt.Value.ToLocalTime():dd.MM.yyyy HH:mm}" : "")</div>
+        @if (!string.IsNullOrEmpty(Model.PaymentId))
+        {
+            <div><strong style="color:var(--ink);">iyzico Ödeme No:</strong> @Model.PaymentId</div>
+        }
+        <div><strong style="color:var(--ink);">Teslimat Adresi:</strong> @Model.DeliveryAddress, @Model.DeliveryCity</div>
         <div><strong style="color:var(--ink);">Telefon:</strong> @Model.PhoneNumber</div>
     </div>
     <div>

@@ -10,7 +10,11 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         builder.Property(o => o.TotalAmount).HasColumnType("decimal(10,2)");
         builder.Property(o => o.DeliveryAddress).IsRequired().HasMaxLength(500);
+        builder.Property(o => o.DeliveryCity).IsRequired().HasMaxLength(100);
         builder.Property(o => o.PhoneNumber).IsRequired().HasMaxLength(20);
+        builder.Property(o => o.PaymentToken).HasMaxLength(200);
+        builder.Property(o => o.PaymentId).HasMaxLength(100);
+        builder.HasIndex(o => o.PaymentToken);
 
         builder.HasOne(o => o.ApplicationUser)
             .WithMany()

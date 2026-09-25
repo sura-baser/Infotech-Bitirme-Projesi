@@ -13,13 +13,6 @@
     </div>
 </div>
 
-@if (TempData["Error"] != null)
-{
-    <div style="max-width:1280px; margin:24px auto 0; padding:0 24px;">
-        <div style="background:var(--off-bg); color:var(--off); padding:14px 20px; font-size:14px;">@TempData["Error"]</div>
-    </div>
-}
-
 @if (!Model.Sizes.Any() || !Model.Flavors.Any())
 {
     <div style="max-width:1280px; margin:0 auto; padding:64px 24px; text-align:center;">

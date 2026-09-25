@@ -46,6 +46,10 @@
                 <svg width="16" height="16" viewBox="0 0 24 22" fill="none"><path d="M1 1H4L6.68 14.39C6.88 15.36 7.74 16 8.73 16H18.4C19.36 16 20.2 15.39 20.44 14.46L22.5 6.5H5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
                 Siparişler
             </a>
+            <a class="admin-navlink @(IsActive("Users") ? "active" : "")" asp-area="Admin" asp-controller="Users" asp-action="Index">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6" /><path d="M4 21C4 16.6 7.6 14 12 14C16.4 14 20 16.6 20 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+                Kullanıcılar
+            </a>
             <div style="margin-top:28px; padding:0 20px;">
                 <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size:12px; color:#9A8A74; text-decoration:none;">&larr; Siteye Dön</a>
             </div>
@@ -57,6 +61,10 @@
             @if (TempData["Success"] != null)
             {
                 <div style="background:var(--ok-bg); color:var(--ok); padding:12px 16px; margin-bottom:20px; font-size:14px;">@TempData["Success"]</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div style="background:var(--off-bg); color:var(--off); padding:12px 16px; margin-bottom:20px; font-size:14px;">@TempData["Error"]</div>
             }
             @RenderBody()
         </div>

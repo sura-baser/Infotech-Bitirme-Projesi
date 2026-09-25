@@ -24,3 +24,25 @@ PastaneApp.slnx
 ```bash
 dotnet build PastaneApp.slnx
 ```
+
+## Yapılandırma (gizli bilgiler)
+
+Şifre ve anahtarlar repoda tutulmaz, ortam değişkeni olarak verilir (`__` ayracı iç içe ayarları temsil eder):
+
+| Ortam değişkeni | Nerede | Açıklama |
+|---|---|---|
+| `ConnectionStrings__DefaultConnection` | Web, Api | PostgreSQL bağlantı cümlesi (geliştirmede `appsettings.Development.json` içinde yerel varsayılan var) |
+| `Seed__AdminPassword` | Web | **İlk kurulumda** yönetici hesabını oluşturur. Verilmezse yönetici oluşturulmaz ve uygulama uyarı yazar. Hesap bir kez oluştuktan sonra şifre panelden değiştirilir, bu değişken bir daha kullanılmaz. |
+| `Seed__AdminEmail` | Web | İsteğe bağlı, varsayılan `admin@pastane.com` |
+| `Jwt__Key` | Api | Token imzalama anahtarı, en az 32 karakter. Canlıda mutlaka kendi değerinizi verin. |
+
+Boş bir veritabanıyla ilk çalıştırma örneği:
+
+```bash
+Seed__AdminPassword='<güçlü-bir-şifre>' dotnet run --project src/PastaneApp.Web
+```
+
+## API
+
+`src/PastaneApp.Api` — JWT ile korunan REST API (kategori ve ürün CRUD, kayıt/giriş).
+Örnek istekler: `src/PastaneApp.Api/PastaneApp.Api.http`

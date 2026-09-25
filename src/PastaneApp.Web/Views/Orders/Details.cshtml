@@ -1,3 +1,4 @@
+@using PastaneApp.Core.Enums
 @using PastaneApp.Web.Helpers
 @model Order
 
@@ -10,8 +11,12 @@
 
     <div style="display:flex; flex-wrap:wrap; gap:32px; margin-bottom:36px; font-size:14px; color:var(--ink-soft);">
         <div><strong style="color:var(--ink);">Tarih:</strong> @Model.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</div>
-        <div><strong style="color:var(--ink);">Durum:</strong> @OrderStatusHelper.GetDisplayName(Model.Status)</div>
-        <div><strong style="color:var(--ink);">Teslimat Adresi:</strong> @Model.DeliveryAddress</div>
+        <div><strong style="color:var(--ink);">Ödeme:</strong> <span style="display:inline-flex; font-size:12px; font-weight:600; padding:3px 10px; @PaymentStatusHelper.GetBadgeStyle(Model.PaymentStatus)">@PaymentStatusHelper.GetDisplayName(Model.PaymentStatus)</span></div>
+        @if (Model.PaymentStatus == PaymentStatus.Paid)
+        {
+            <div><strong style="color:var(--ink);">Sipariş Durumu:</strong> @OrderStatusHelper.GetDisplayName(Model.Status)</div>
+        }
+        <div><strong style="color:var(--ink);">Teslimat Adresi:</strong> @Model.DeliveryAddress, @Model.DeliveryCity</div>
         <div><strong style="color:var(--ink);">Telefon:</strong> @Model.PhoneNumber</div>
     </div>
 
@@ -49,5 +54,10 @@
         </tfoot>
     </table>
 
+    @if (Model.PaymentStatus != PaymentStatus.Paid)
+    {
+        <a asp-action="Pay" asp-route-id="@Model.Id" class="as-pill" style="margin-bottom:24px;">Ödemeyi Tamamla</a>
+        <br />
+    }
     <a asp-action="Index" style="font-size:14px; font-weight:600;">&larr; Siparişlerime Dön</a>
 </div>

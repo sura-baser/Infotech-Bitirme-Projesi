@@ -1,6 +1,84 @@
-@PastaneApp.Api_HostAddress = http://localhost:5214
+@baseUrl = http://localhost:5214
 
-GET {{PastaneApp.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Kategoriler (herkese açık)
+GET {{baseUrl}}/api/categories
+
+### Ürünler (herkese açık) - filtreler isteğe bağlı: categoryId, search, excludeAllergenIds
+GET {{baseUrl}}/api/products?categoryId=5
 
 ###
+GET {{baseUrl}}/api/products?search=tiramisu
+
+### Süt/Laktoz içermeyen ürünler (alerjen id: 2)
+GET {{baseUrl}}/api/products?excludeAllergenIds=2
+
+### Tek ürün
+GET {{baseUrl}}/api/products/2
+
+### Kayıt (Customer rolüyle)
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "musteri@example.com",
+  "password": "Sifre123!",
+  "fullName": "Örnek Müşteri"
+}
+
+### Giriş - dönen token'ı aşağıdaki @token değişkenine yapıştırın
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@pastane.com",
+  "password": "YONETICI_SIFRESI"
+}
+
+###
+@token = BURAYA_TOKEN
+
+### Yeni kategori (yalnızca Admin)
+POST {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Yeni Kategori",
+  "description": "Açıklama"
+}
+
+### Yeni ürün (yalnızca Admin)
+POST {{baseUrl}}/api/products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Yeni Ürün",
+  "description": "Açıklama",
+  "highlights": "Birinci madde\nİkinci madde",
+  "price": 500,
+  "stock": 10,
+  "servingInfo": "8'li kutu",
+  "isActive": true,
+  "categoryId": 2
+}
+
+### Ürün güncelle (yalnızca Admin) - PUT tüm alanları değiştirir, id'yi kendi test ürününüzle değiştirin
+PUT {{baseUrl}}/api/products/99
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Yeni Ürün",
+  "description": "Güncel açıklama",
+  "highlights": "Birinci madde",
+  "price": 550,
+  "stock": 8,
+  "servingInfo": "8'li kutu",
+  "isActive": true,
+  "categoryId": 2
+}
+
+### Ürün sil (yalnızca Admin)
+DELETE {{baseUrl}}/api/products/99
+Authorization: Bearer {{token}}

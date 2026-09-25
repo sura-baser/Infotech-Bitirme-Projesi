@@ -1,0 +1,71 @@
+@model UserFormViewModel
+
+<div asp-validation-summary="All" style="color:#B3261E; margin-bottom:16px; font-size:14px;"></div>
+<input type="hidden" asp-for="Id" />
+
+<div style="margin-bottom:20px;">
+    <label asp-for="Email" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+    @if (Model.IsEdit)
+    {
+        <input asp-for="Email" readonly style="width:100%; padding:12px 16px; border:1px solid var(--line); background:var(--cream); color:var(--ink-soft); font-size:14px;" />
+    }
+    else
+    {
+        <input asp-for="Email" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+    }
+</div>
+
+<div style="margin-bottom:20px;">
+    <label asp-for="FullName" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+    <input asp-for="FullName" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+</div>
+
+<div style="margin-bottom:20px;">
+    <label asp-for="PhoneNumber" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+    <input asp-for="PhoneNumber" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+</div>
+
+<div style="margin-bottom:20px;">
+    <label asp-for="Address" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+    <textarea asp-for="Address" rows="3" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px; font-family:inherit;"></textarea>
+</div>
+
+<div style="margin-bottom:20px;">
+    <label asp-for="Password" style="display:block; font-size:14px; margin-bottom:8px;">@(Model.IsEdit ? "Yeni Şifre (boş bırakırsanız değişmez)" : "Şifre")</label>
+    <input asp-for="Password" autocomplete="new-password" style="width:100%; padding:12px 16px; border:1px solid var(--line); background:#fff; font-size:14px;" />
+    <div style="font-size:12px; color:var(--ink-soft); margin-top:6px;">En az 6 karakter; büyük harf, küçük harf, rakam ve özel karakter içermelidir.</div>
+</div>
+
+<div style="margin-bottom:24px;">
+    <label asp-for="Role" style="display:block; font-size:14px; margin-bottom:8px;"></label>
+    @if (Model.IsCurrentUser)
+    {
+        <input type="hidden" asp-for="Role" />
+        <div style="font-size:14px; color:var(--ink-soft);">@Model.Role <span style="font-size:12px;">(kendi rolünüzü değiştiremezsiniz)</span></div>
+    }
+    else
+    {
+        <select asp-for="Role" class="form-select" style="border-radius:0; border-color:var(--line);">
+            <option value="Customer">Customer (Müşteri)</option>
+            <option value="Admin">Admin (Yönetici)</option>
+        </select>
+    }
+</div>
+
+@if (Model.IsEdit)
+{
+    <div style="margin-bottom:28px;">
+        @if (Model.IsCurrentUser)
+        {
+            <input type="hidden" asp-for="IsLocked" value="false" />
+            <div style="font-size:13px; color:var(--ink-soft);">Kendi hesabınızı kilitleyemezsiniz.</div>
+        }
+        else
+        {
+            <label style="display:flex; align-items:center; gap:9px; font-size:14px; cursor:pointer;">
+                <input type="checkbox" asp-for="IsLocked" style="accent-color:var(--ink); width:15px; height:15px;" />
+                Hesap kilitli (giriş yapamaz)
+            </label>
+        }
+    </div>
+}

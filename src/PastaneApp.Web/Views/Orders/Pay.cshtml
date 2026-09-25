@@ -1,0 +1,35 @@
+@model PayViewModel
+
+@{
+    ViewData["Title"] = "Ödeme";
+}
+
+<div style="max-width:960px; margin:0 auto; padding:40px 24px 90px;">
+    <h1 class="as-serif" style="font-size:34px; font-weight:700; margin:0 0 8px;">Ödeme</h1>
+    <p style="font-size:14px; color:var(--ink-soft); margin:0 0 32px;">Sipariş #@Model.Order.Id &middot; Toplam <strong style="color:var(--ink);">@Model.Order.TotalAmount.ToString("C2")</strong></p>
+
+    <div style="display:grid; grid-template-columns:1fr 320px; gap:48px; align-items:start;">
+        <div>
+            <div id="iyzipay-checkout-form" class="responsive"></div>
+            @Html.Raw(Model.CheckoutFormHtml)
+        </div>
+
+        <div style="background:var(--cream); border:1px solid var(--line); padding:24px;">
+            <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:14px;">Sipariş Özeti</div>
+            @foreach (var item in Model.Order.OrderDetails)
+            {
+                <div style="display:flex; justify-content:space-between; gap:12px; font-size:14px; padding:8px 0; border-bottom:1px solid var(--line);">
+                    <span>@item.ProductName @(item.Quantity > 1 ? $"x{item.Quantity}" : "")</span>
+                    <span style="font-weight:600;">@((item.UnitPrice * item.Quantity).ToString("C2"))</span>
+                </div>
+            }
+            <div style="display:flex; justify-content:space-between; font-size:16px; font-weight:700; padding-top:14px;">
+                <span>Toplam</span><span>@Model.Order.TotalAmount.ToString("C2")</span>
+            </div>
+            <div style="font-size:13px; color:var(--ink-soft); margin-top:16px; line-height:1.6;">
+                <strong style="color:var(--ink);">Teslimat:</strong> @Model.Order.DeliveryAddress, @Model.Order.DeliveryCity
+            </div>
+            <a asp-controller="Orders" asp-action="Details" asp-route-id="@Model.Order.Id" style="display:inline-block; margin-top:16px; font-size:13px; color:var(--ink-soft);">&larr; Vazgeç</a>
+        </div>
+    </div>
+</div>

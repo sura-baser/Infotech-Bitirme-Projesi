@@ -1,0 +1,39 @@
+@model UserDeleteViewModel
+
+@{
+    ViewData["Title"] = "Kullanıcıyı Sil";
+}
+
+<h1 class="as-serif" style="font-size:28px; font-weight:700; margin:0 0 24px;">Kullanıcıyı Sil</h1>
+
+@if (Model.IsCurrentUser)
+{
+    <div style="background:var(--off-bg); color:var(--off); padding:16px 20px; margin-bottom:24px; font-size:14px; max-width:480px;">
+        Kendi hesabınızı silemezsiniz.
+    </div>
+    <a asp-action="Index" style="font-size:14px; color:var(--ink-soft);">&larr; Kullanıcı Listesine Dön</a>
+}
+else if (Model.OrderCount > 0)
+{
+    <div style="background:var(--off-bg); color:var(--off); padding:16px 20px; margin-bottom:24px; font-size:14px; max-width:480px;">
+        <strong>@Model.Email</strong> kullanıcısının @Model.OrderCount siparişi var, bu yüzden silinemez.
+        Sipariş geçmişi korunmalı; bunun yerine hesabı düzenleme ekranından kilitleyebilirsiniz.
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="as-pill">Düzenle / Kilitle</a>
+        <a asp-action="Index" style="font-size:14px; color:var(--ink-soft);">İptal</a>
+    </div>
+}
+else
+{
+    <div style="background:var(--off-bg); color:var(--off); padding:16px 20px; margin-bottom:24px; font-size:14px; max-width:480px;">
+        <strong>@Model.Email</strong> kullanıcısını silmek istediğine emin misin? Bu işlem geri alınamaz.
+    </div>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <div style="display:flex; align-items:center; gap:16px;">
+            <button type="submit" class="as-pill" style="background:#B3261E;">Evet, Sil</button>
+            <a asp-action="Index" style="font-size:14px; color:var(--ink-soft);">İptal</a>
+        </div>
+    </form>
+}

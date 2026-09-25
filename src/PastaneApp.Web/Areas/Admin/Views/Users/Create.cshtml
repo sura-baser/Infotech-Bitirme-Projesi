@@ -1,0 +1,20 @@
+@model UserFormViewModel
+
+@{
+    ViewData["Title"] = "Yeni Kullanıcı";
+}
+
+<h1 class="as-serif" style="font-size:28px; font-weight:700; margin:0 0 28px;">Yeni Kullanıcı</h1>
+
+<form asp-action="Create" method="post" style="max-width:480px;">
+    <partial name="_UserForm" model="Model" />
+
+    <div style="display:flex; align-items:center; gap:16px;">
+        <button type="submit" class="as-pill">Kaydet</button>
+        <a asp-action="Index" style="font-size:14px; color:var(--ink-soft);">İptal</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
