@@ -6,9 +6,9 @@
 }
 
 <div style="background:var(--bordo); color:var(--cream);">
-    <div style="max-width:1280px; margin:0 auto; padding:64px 24px;">
+    <div class="as-party-hero">
         <div style="font-size:13px; letter-spacing:.16em; text-transform:uppercase; font-weight:600; margin-bottom:16px; opacity:.85;">Özel Karışım</div>
-        <h1 class="as-serif" style="font-size:44px; font-weight:700; margin:0 0 20px;">Parti Kutunu Kendin Oluştur!</h1>
+        <h1 class="as-serif as-party-title" style="font-weight:700; margin:0 0 20px;">Parti Kutunu Kendin Oluştur!</h1>
         <p style="font-size:16px; line-height:1.7; max-width:560px; opacity:.9; margin:0;">Bir kutu boyutu seç, sonra sevdiğin lezzetlerden karıştırarak kutunu doldur.</p>
     </div>
 </div>
@@ -39,7 +39,7 @@ else
             </div>
 
             <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:18px;">2. Lezzetlerini Seç</div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 220px)); gap:20px; margin-bottom:28px;">
+            <div class="as-flavor-grid" style="margin-bottom:28px;">
                 @foreach (var flavor in Model.Flavors)
                 {
                     <div style="border:1px solid var(--line); padding:16px;">

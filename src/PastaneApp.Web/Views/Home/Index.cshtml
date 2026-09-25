@@ -5,10 +5,10 @@
 }
 
 <!-- hero -->
-<div style="max-width:1280px; margin:0 auto; padding:24px 24px 90px; display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;">
+<div class="as-hero">
     <div>
         <div style="font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:20px;">El Yapımı · Günlük Taze</div>
-        <h1 class="as-serif" style="font-size:56px; line-height:1.08; font-weight:700; margin:0 0 26px;">Atölyeden Sofranıza,<br />Zarafetle</h1>
+        <h1 class="as-serif as-hero-title" style="line-height:1.08; font-weight:700; margin:0 0 26px;">Atölyeden Sofranıza,<br />Zarafetle</h1>
         <p style="font-size:17px; line-height:1.7; color:var(--ink-soft); max-width:460px; margin:0 0 36px;">Görsel zarafet, dengeli katmanlar. En taze mevsim lezzetleriyle, özel anlarınıza eşlik etmesi için sayılı adette hazırlanan imza tatlar.</p>
         <div style="display:flex; flex-wrap:wrap; gap:16px;">
             <a asp-controller="Products" asp-action="Index" class="as-pill">Ürünleri Keşfet</a>
@@ -24,7 +24,7 @@
 <div style="background:var(--butter);">
     <div style="max-width:1280px; margin:0 auto; padding:36px 24px 48px;">
         <h2 class="as-serif" style="font-size:24px; font-weight:700; margin:0 0 24px;">Kategoriler</h2>
-        <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:24px;">
+        <div class="as-cat-grid">
             @foreach (var category in Model.Categories)
             {
                 <a asp-controller="Products" asp-action="Index" asp-route-categoryId="@category.Id" class="category-card" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; align-items:center; gap:14px;">
@@ -43,7 +43,7 @@
 
 <!-- trust -->
 <div style="background:var(--ink); color:var(--cream);">
-    <div style="max-width:1280px; margin:0 auto; padding:76px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:56px;">
+    <div class="as-trust-grid">
         <div>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin-bottom:18px;"><path d="M12 2L14.5 8.5L21 9.3L16 13.9L17.5 20.5L12 17L6.5 20.5L8 13.9L3 9.3L9.5 8.5L12 2Z" stroke="#EAE0CC" stroke-width="1.4" stroke-linejoin="round" /></svg>
             <h3 class="as-serif" style="font-size:21px; font-weight:700; margin:0 0 10px;">Elde Yapılır</h3>

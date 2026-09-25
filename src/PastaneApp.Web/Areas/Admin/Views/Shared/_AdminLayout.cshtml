@@ -25,15 +25,15 @@
     </style>
 </head>
 <body>
-    <div style="width:100%; min-height:100vh; background:var(--cream); display:flex;">
+    <div class="as-admin">
 
         <!-- sidebar -->
-        <div style="width:240px; background:var(--ink); flex-shrink:0; padding:28px 0;">
+        <div class="as-admin-sidebar">
             <div style="display:flex; align-items:center; gap:8px; padding:0 20px 32px;">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3L13.8 9.2L20 11L13.8 12.8L12 19L10.2 12.8L4 11L10.2 9.2L12 3Z" stroke="var(--turquoise)" stroke-width="1.4" stroke-linejoin="round" /></svg>
                 <div lang="en" class="as-serif" style="font-size:18px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--cream);">Atelier Sura</div>
             </div>
-            <div style="font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#9A8A74; padding:0 20px 10px;">Yönetim</div>
+            <div class="as-admin-label" style="font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#9A8A74; padding:0 20px 10px;">Yönetim</div>
             <a class="admin-navlink @(IsActive("Categories") ? "active" : "")" asp-area="Admin" asp-controller="Categories" asp-action="Index">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.6" /><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.6" /><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.6" /><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.6" /></svg>
                 Kategoriler
@@ -50,13 +50,13 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6" /><path d="M4 21C4 16.6 7.6 14 12 14C16.4 14 20 16.6 20 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
                 Kullanıcılar
             </a>
-            <div style="margin-top:28px; padding:0 20px;">
+            <div class="as-admin-back" style="margin-top:28px; padding:0 20px;">
                 <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size:12px; color:#9A8A74; text-decoration:none;">&larr; Siteye Dön</a>
             </div>
         </div>
 
         <!-- content -->
-        <div style="flex:1; padding:40px 48px;">
+        <div class="as-admin-content">
             <div style="font-size:13px; color:var(--ink-soft); margin-bottom:6px;">Hoş geldin, @displayName</div>
             @if (TempData["Success"] != null)
             {

@@ -8,7 +8,7 @@
     <h1 class="as-serif" style="font-size:34px; font-weight:700; margin:0 0 8px;">Ödeme</h1>
     <p style="font-size:14px; color:var(--ink-soft); margin:0 0 32px;">Sipariş #@Model.Order.Id &middot; Toplam <strong style="color:var(--ink);">@Model.Order.TotalAmount.ToString("C2")</strong></p>
 
-    <div style="display:grid; grid-template-columns:1fr 320px; gap:48px; align-items:start;">
+    <div class="as-pay-layout">
         <div>
             <div id="iyzipay-checkout-form" class="responsive"></div>
             @Html.Raw(Model.CheckoutFormHtml)

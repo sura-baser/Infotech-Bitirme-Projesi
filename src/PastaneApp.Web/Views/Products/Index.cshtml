@@ -8,9 +8,14 @@
     <h1 class="as-serif" style="font-size:40px; font-weight:700; margin:0;">Ürünlerimiz</h1>
 </div>
 
-<div style="max-width:1280px; margin:0 auto; padding:20px 24px 90px; display:grid; grid-template-columns:260px 1fr; gap:56px; align-items:start;">
+<div class="as-shop-layout">
 
     <!-- filter sidebar -->
+    @{
+        var hasActiveFilter = Model.SelectedCategoryId.HasValue || !string.IsNullOrWhiteSpace(Model.Search) || Model.ExcludedAllergenIds.Any();
+    }
+    <details class="as-filters" open="@hasActiveFilter">
+    <summary class="as-filters-toggle">Filtrele ve Ara</summary>
     <form method="get" asp-action="Index" style="display:flex; flex-direction:column; gap:30px;">
         <div>
             <div style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px; font-weight:600;">Ara</div>
@@ -43,6 +48,7 @@
         <button type="submit" class="as-pill">Filtrele</button>
         <a asp-action="Index" style="font-size:13px; color:var(--ink-soft); text-decoration:underline; text-align:center;">Filtreleri Temizle</a>
     </form>
+    </details>
 
     <!-- product grid -->
     <div>
@@ -51,7 +57,7 @@
             <p style="color:var(--ink-soft);">Aradığınız kriterlere uygun ürün bulunamadı.</p>
         }
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 340px)); gap:36px 32px;">
+        <div class="as-product-grid">
             @foreach (var product in Model.Products)
             {
                 <a asp-action="Details" asp-route-id="@product.Id" style="text-decoration:none; color:inherit;">
@@ -65,7 +71,7 @@
                             <div class="as-tile-placeholder">fotoğraf</div>
                         }
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div class="as-card-meta" style="display:flex; justify-content:space-between; align-items:flex-start;">
                         <div>
                             <div class="as-serif" style="font-size:16px; font-weight:700;">@product.Name</div>
                             <div style="font-size:12px; color:var(--ink-soft); margin-top:2px;">@product.CategoryName</div>
@@ -77,3 +83,16 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var filters = document.querySelector('.as-filters');
+            if (!filters) return;
+            var desktop = window.matchMedia('(min-width: 901px)');
+            function sync() { if (desktop.matches) filters.open = true; }
+            sync();
+            desktop.addEventListener('change', sync);
+        })();
+    </script>
+}

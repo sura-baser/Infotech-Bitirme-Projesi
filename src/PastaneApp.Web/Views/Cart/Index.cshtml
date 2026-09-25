@@ -14,13 +14,13 @@
     }
     else
     {
-        <div style="display:grid; grid-template-columns:1fr 380px; gap:56px; align-items:start;">
+        <div class="as-cart-layout">
 
             <!-- line items -->
             <div>
                 @foreach (var item in Model.Items)
                 {
-                    <div style="display:flex; gap:20px; padding:24px 0; border-bottom:1px solid var(--line); align-items:center;">
+                    <div class="as-cart-row">
                         <div style="width:88px; height:88px; background:var(--beige); flex-shrink:0; border-radius:3px; overflow:hidden;">
                             @if (item.ImageUrl != null)
                             {

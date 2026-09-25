@@ -30,7 +30,7 @@
     <a asp-action="Index">Ürünler</a> &nbsp;/&nbsp; @Model.Product.Category?.Name &nbsp;/&nbsp; @Model.Product.Name
 </div>
 
-<div style="max-width:1280px; margin:0 auto; padding:0 24px 90px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;">
+<div class="as-detail-layout">
 
     <!-- photo column -->
     <div>
@@ -86,7 +86,7 @@
 
     <!-- info column -->
     <div>
-        <h1 class="as-serif" style="font-size:38px; font-weight:700; margin:0 0 8px;">@Model.Product.Name</h1>
+        <h1 class="as-serif as-detail-title" style="font-weight:700; margin:0 0 8px;">@Model.Product.Name</h1>
         <div style="color:var(--ink-soft); font-size:14px; margin-bottom:18px;">
             @Model.Product.Category?.Name
             @if (!string.IsNullOrWhiteSpace(Model.Product.ServingInfo))
