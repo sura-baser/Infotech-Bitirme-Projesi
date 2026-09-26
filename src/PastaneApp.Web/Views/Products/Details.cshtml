@@ -94,7 +94,7 @@
                 <text> · @Model.Product.ServingInfo</text>
             }
         </div>
-        <div style="font-size:24px; font-weight:600; margin-bottom:26px;">@Model.Product.Price.ToString("C2")</div>
+        <div style="font-size:24px; font-weight:600; margin-bottom:26px;">@Model.Product.Price.ToTl()</div>
 
         @if (!string.IsNullOrWhiteSpace(Model.Product.Description))
         {

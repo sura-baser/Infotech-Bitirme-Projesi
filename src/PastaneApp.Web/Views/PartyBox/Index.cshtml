@@ -33,7 +33,7 @@ else
                         <input type="radio" name="boxProductId" value="@size.ProductId" data-piece-count="@size.PieceCount" @(i == 0 ? "checked" : "") style="accent-color:var(--bordo);" />
                         <div class="as-serif" style="font-size:19px; font-weight:700; color:var(--ink);">@size.Name</div>
                         <div style="font-size:13px; color:var(--ink-soft);">@size.PieceCount parça</div>
-                        <div style="font-size:16px; font-weight:600; color:var(--ink);">@size.Price.ToString("C2")</div>
+                        <div style="font-size:16px; font-weight:600; color:var(--ink);">@size.Price.ToTl()</div>
                     </label>
                 }
             </div>

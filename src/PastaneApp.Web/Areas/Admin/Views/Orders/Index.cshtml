@@ -35,7 +35,7 @@ else
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@order.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;"><span style="display:inline-flex; font-size:12px; font-weight:600; padding:4px 10px; @PaymentStatusHelper.GetBadgeStyle(order.PaymentStatus)">@PaymentStatusHelper.GetDisplayName(order.PaymentStatus)</span></td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@OrderStatusHelper.GetDisplayName(order.Status)</td>
-                        <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; font-weight:600;">@order.TotalAmount.ToString("C2")</td>
+                        <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; font-weight:600;">@order.TotalAmount.ToTl()</td>
                         <td style="padding:14px 16px; border-top:1px solid var(--line); text-align:right;">
                             <a asp-action="Details" asp-route-id="@order.Id" class="btn" style="font-size:12px; font-weight:600; padding:6px 12px; border:1px solid var(--line);">Detay</a>
                         </td>

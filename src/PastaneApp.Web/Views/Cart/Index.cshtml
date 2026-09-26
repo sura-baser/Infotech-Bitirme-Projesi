@@ -33,14 +33,14 @@
                             {
                                 <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">@item.CustomizationNotes</div>
                             }
-                            <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">@item.UnitPrice.ToString("C2")</div>
+                            <div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">@item.UnitPrice.ToTl()</div>
                         </div>
                         <form asp-action="UpdateQuantity" method="post" style="display:flex; align-items:center; border:1px solid var(--line);">
                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
                             <input type="number" name="quantity" value="@item.Quantity" min="1" max="2" style="width:50px; height:40px; border:none; text-align:center; font-size:14px;" />
                             <button type="submit" style="width:34px; height:40px; border:none; background:transparent; cursor:pointer;">↻</button>
                         </form>
-                        <div style="width:80px; text-align:right; font-weight:600;">@item.Subtotal.ToString("C2")</div>
+                        <div style="width:80px; text-align:right; font-weight:600;">@item.Subtotal.ToTl()</div>
                         <form asp-action="RemoveItem" method="post">
                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
                             <button type="submit" style="border:none; background:transparent; color:var(--ink-soft); cursor:pointer; font-size:13px; text-decoration:underline;">Kaldır</button>
@@ -55,7 +55,7 @@
             <div style="background:var(--turquoise); padding:36px 32px;">
                 <div class="as-serif" style="font-size:20px; font-weight:700; margin-bottom:24px; color:var(--turquoise-deep);">Sipariş Özeti</div>
                 <div style="border-top:1px solid rgba(63,96,88,.25); padding-top:20px; display:flex; justify-content:space-between; font-size:18px; font-weight:700; margin-bottom:26px; color:var(--turquoise-deep);">
-                    <span>Toplam</span><span>@Model.Total.ToString("C2")</span>
+                    <span>Toplam</span><span>@Model.Total.ToTl()</span>
                 </div>
                 <a asp-controller="Orders" asp-action="Checkout" class="as-pill" style="width:100%; background:var(--turquoise-deep); color:var(--cream); display:flex;">Siparişi Tamamla</a>
             </div>

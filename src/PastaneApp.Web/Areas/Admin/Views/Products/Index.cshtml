@@ -38,7 +38,7 @@
                     </td>
                     <td class="as-serif" style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; font-weight:700;">@product.Name</td>
                     <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px; color:var(--ink-soft);">@product.Category?.Name</td>
-                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@product.Price.ToString("C2")</td>
+                    <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@product.Price.ToTl()</td>
                     <td style="padding:14px 16px; border-top:1px solid var(--line); font-size:14px;">@product.Stock</td>
                     <td style="padding:14px 16px; border-top:1px solid var(--line);">
                         @if (product.IsActive)
